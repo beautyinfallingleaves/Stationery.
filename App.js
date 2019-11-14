@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {ImagePickerExample} from './client/components'
+import { StyleSheet, View } from 'react-native';
+import {Postcard} from './client/components'
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ImagePickerExample />
+      {/* <Home /> */}
+      <Postcard />
     </View>
   );
 }

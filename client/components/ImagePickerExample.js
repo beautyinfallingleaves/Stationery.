@@ -1,25 +1,31 @@
 import * as React from 'react';
 import { StyleSheet, Button, Image, View, Dimensions } from 'react-native';
+import { ScreenOrientation } from 'expo'
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import MapView, { Marker } from 'react-native-maps'
+import { SketchComponent } from './'
 
 export default class ImagePickerExample extends React.Component {
-  state = {
-    image: null,
-    latitude: null,
-    longitude: null,
-  };
+  constructor() {
+    super()
+    this.state = {
+      image: null,
+      latitude: null,
+      longitude: null,
+    };
+  }
 
   render() {
+    // this.changeScreenOrientation()
     let { image, latitude, longitude } = this.state;
 
     return (
       <React.Fragment>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Button
-            title="Pick an image from camera roll"
+            title="Choose a memory to share with a friend."
             onPress={this._pickImage}
           />
           {image &&
@@ -29,28 +35,34 @@ export default class ImagePickerExample extends React.Component {
           <View style={styles.container}>
               <MapView
                 style={styles.mapStyle}
+                scrollEnabled={false}
                 initialRegion={{
                   latitude,
                   longitude,
-                  latitudeDelta: 0.0,
-                  longitudeDelta: 0.0,
+                  latitudeDelta: 0.05,
+                  longitudeDelta: 0.05,
                 }}
               >
                 <Marker
                   coordinate={{latitude,
-                  longitude}}
-                  // title={"title"}
-                  // description={"description"}
+                    longitude}}
                 />
               </MapView>
           </View>
         }
+        <SketchComponent style={{ position: "absolute", top: "0px" }} />
       </React.Fragment>
     );
   }
 
   componentDidMount() {
-    this.getPermissionAsync();
+    this.getPermissionAsync()
+    // this.changeScreenOrientation
+    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE)
+  }
+
+  changeScreenOrientation = async () => {
+    await ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE);
   }
 
   getPermissionAsync = async () => {
@@ -70,8 +82,6 @@ export default class ImagePickerExample extends React.Component {
       quality: 1,
       exif: true,
     });
-
-    console.log(result)
 
     if (!result.cancelled) {
       this.setState({
