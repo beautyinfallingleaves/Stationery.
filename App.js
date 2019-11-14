@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {Postcard} from './client/components'
+import {Postcard, ImagePickerExample, Sketch} from './client/components'
 
 
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <Home /> */}
-      <Postcard />
+      <Postcard latitude={41.34} longitude={-87.58} />
     </View>
   );
 }

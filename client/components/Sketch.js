@@ -1,3 +1,4 @@
+import Expo from 'expo';
 import * as ExpoPixi from 'expo-pixi';
 import React, { Component } from 'react';
 import { Image, Button, Platform, AppState, StyleSheet, Text, View } from 'react-native';
@@ -12,18 +13,19 @@ function uuidv4() {
   });
 }
 
-export default class App extends Component {
+export default class Sketch extends Component {
   state = {
     image: null,
-    strokeColor: "black",
+    strokeColor: 'black',
     strokeWidth: 3,
+    lines: [],
     appState: AppState.currentState,
   };
 
   handleAppStateChangeAsync = nextAppState => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       if (isAndroid && this.sketch) {
-        this.setState({ appState: nextAppState, id: uuidv4()});
+        this.setState({ appState: nextAppState, id: uuidv4(), lines: this.sketch.lines });
         return;
       }
     }
@@ -63,10 +65,8 @@ export default class App extends Component {
               strokeAlpha={1}
               onChange={this.onChangeAsync}
               onReady={this.onReady}
+              initialLines={this.state.lines}
             />
-            <View style={styles.label}>
-              <Text>Write a Note.</Text>
-            </View>
           </View>
           {/* <View style={styles.imageContainer}>
             <View style={styles.label}>
@@ -92,20 +92,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+    height: '100%',
+    position: 'absolute',
   },
   sketch: {
     flex: 1,
   },
   sketchContainer: {
-    height: '100%',
-    width: '100%',
+    flex: 1,
   },
   image: {
     flex: 1,
   },
   imageContainer: {
     height: '50%',
-    width: '100%',
     borderTopWidth: 4,
     borderTopColor: '#E44262',
   },

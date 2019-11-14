@@ -1,74 +1,85 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, View, Dimensions } from 'react-native';
+import { StyleSheet, Button, Image, View, ImageBackground } from 'react-native';
 import { ScreenOrientation } from 'expo'
 import MapView, { Marker } from 'react-native-maps'
 import { Divider, Text } from 'react-native-elements'
+import { Ionicons } from '@expo/vector-icons'
+import { Sketch } from './'
 
 class Postcard extends React.Component {
-
+  constructor() {
+    super()
+    this.state = {
+      writing: true
+    }
+  }
 
   componentDidMount() {
     ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE)
   }
 
   render() {
-    // TESTING ONLY
-    const latitude = 41.34
-    const longitude = -87.58
+    const {longitude, latitude} = this.props
 
     return (
-      <View style={styles.root}>
-        <View style={styles.postcard}>
-          <View style={styles.mapArea}>
-            <MapView
-              style={styles.mapStyle}
-              scrollEnabled={false}
-              initialRegion={{
-                latitude,
-                longitude,
-                latitudeDelta: 0.5,
-                longitudeDelta: 0.5,
-              }}
-            >
-              <Marker
-                coordinate={{latitude,
-                  longitude}}
-              />
-            </MapView>
-          </View>
-          <View style={styles.textArea}>
-            <Image source={require('../../assets/post_stamp.png')} style={{width: 125, height: 125, alignSelf: 'flex-end'}} />
-            <View style={styles.textAreaDividerArea}>
-              <Text h4> </Text>
-              <Divider style={styles.divider} />
-              <Text h4> </Text>
-              <Divider style={styles.divider} />
-              <Text h4> </Text>
-              <Divider style={styles.divider} />
-              <Text h4> </Text>
-              <Divider style={styles.divider} />
-              <Text h4> </Text>
-              <Divider style={styles.divider} />
-              <Text h4> </Text>
-              <Divider style={styles.divider} />
+      <ImageBackground source={require('../../assets/bkgd_table.jpg')} style={{width: '100%', height: '100%'}}>
+        <View style={styles.root}>
+            <View style={styles.postcard}>
+              <View style={styles.mapArea}>
+                <MapView
+                  style={styles.mapStyle}
+                  scrollEnabled={false}
+                  initialRegion={{
+                    latitude,
+                    longitude,
+                    latitudeDelta: 0.5,
+                    longitudeDelta: 0.5,
+                  }}
+                >
+                  <Marker
+                    coordinate={{latitude,
+                      longitude}}
+                  />
+                </MapView>
+              </View>
+              <View style={styles.textArea}>
+                <Image source={require('../../assets/post_stamp.png')} style={{width: 150, height: 150, alignSelf: 'flex-end'}} />
+                <View style={styles.textAreaDividerArea}>
+                  <Text>{'\n'}</Text>
+                  <Divider style={styles.divider} />
+                  <Text>{'\n'}</Text>
+                  <Divider style={styles.divider} />
+                  <Text>{'\n'}</Text>
+                  <Divider style={styles.divider} />
+                  <Text>{'\n'}</Text>
+                  <Divider style={styles.divider} />
+                  <Text>{'\n'}</Text>
+                  <Divider style={styles.divider} />
+                </View>
+              </View>
+              {this.state.writing &&
+                <Sketch />
+              }
             </View>
-          </View>
+            <View style={styles.controls}>
+              <Text>Some controls!</Text>
+              <Ionicons name='md-undo' size={32} color='white' />
+            </View>
         </View>
-        <View style={styles.controls}>
-          <Text>Some controls!</Text>
-        </View>
-      </View>
+      </ImageBackground>
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'row',
-    width: '100%',
     height: '100%',
-    backgroundColor: '#996633',
+    width: '100%'
+    // backgroundColor: '#996633',
+
   },
   postcard: {
     flex: 1,
@@ -78,8 +89,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
-    margin: 5,
-    shadowColor: 'dark-gray',
+    margin: 10,
     shadowOpacity: 0.75,
     shadowOffset: { width: 2, height: 2 },
   },
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   divider: {
-    backgroundcolor: 'gray',
+    backgroundColor: 'gray',
   },
   mapArea: {
     flex: 1,
@@ -110,7 +120,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   controls: {
-    width: '7%',
+    width: '10%',
   }
 });
 

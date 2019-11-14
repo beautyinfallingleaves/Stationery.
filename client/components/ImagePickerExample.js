@@ -57,12 +57,6 @@ export default class ImagePickerExample extends React.Component {
 
   componentDidMount() {
     this.getPermissionAsync()
-    // this.changeScreenOrientation
-    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE)
-  }
-
-  changeScreenOrientation = async () => {
-    await ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE);
   }
 
   getPermissionAsync = async () => {
