@@ -4,22 +4,21 @@ import { ScreenOrientation } from 'expo'
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import MapView, { Marker } from 'react-native-maps'
-import { SketchComponent } from './'
 
 export default class ImagePickerExample extends React.Component {
   constructor() {
     super()
     this.state = {
       image: null,
-      latitude: null,
-      longitude: null,
     };
   }
 
+  componentDidMount() {
+    this.getPermissionAsync()
+  }
+
   render() {
-    // this.changeScreenOrientation()
-    let { image, latitude, longitude } = this.state;
+    let { image } = this.state;
 
     return (
       <React.Fragment>
@@ -31,33 +30,11 @@ export default class ImagePickerExample extends React.Component {
           {image &&
             <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
         </View>
-        {latitude && longitude &&
-          <View style={styles.container}>
-              <MapView
-                style={styles.mapStyle}
-                scrollEnabled={false}
-                initialRegion={{
-                  latitude,
-                  longitude,
-                  latitudeDelta: 0.05,
-                  longitudeDelta: 0.05,
-                }}
-              >
-                <Marker
-                  coordinate={{latitude,
-                    longitude}}
-                />
-              </MapView>
-          </View>
-        }
-        <SketchComponent style={{ position: "absolute", top: "0px" }} />
       </React.Fragment>
     );
   }
 
-  componentDidMount() {
-    this.getPermissionAsync()
-  }
+
 
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {

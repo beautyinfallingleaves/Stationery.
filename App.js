@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {Postcard, ImagePickerExample, Sketch} from './client/components'
-
+import {Postcard} from './client/components'
+import * as MagicMove from 'react-native-magic-move'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <Home /> */}
-      <Postcard latitude={41.34} longitude={-87.58} />
-    </View>
+    <MagicMove.Provider>
+      <View style={styles.container}>
+        <Postcard latitude={41.34} longitude={-87.58} />
+      </View>
+    </MagicMove.Provider>
   );
 }
 

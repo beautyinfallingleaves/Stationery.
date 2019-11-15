@@ -18,7 +18,7 @@ export default class Sketch extends Component {
     image: null,
     strokeColor: 'black',
     strokeWidth: 3,
-    lines: [],
+    // lines: [],
     appState: AppState.currentState,
   };
 
@@ -65,7 +65,7 @@ export default class Sketch extends Component {
               strokeAlpha={1}
               onChange={this.onChangeAsync}
               onReady={this.onReady}
-              initialLines={this.state.lines}
+              // initialLines={this.state.lines}
             />
           </View>
           {/* <View style={styles.imageContainer}>
