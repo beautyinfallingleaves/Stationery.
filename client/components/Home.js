@@ -1,19 +1,12 @@
 import * as React from 'react'
 import { Text, StyleSheet, View } from 'react-native'
-import { Link } from 'react-router-native'
-import { ScreenOrientation } from 'expo'
 
 class Home extends React.Component {
-  componentDidMount() {
-    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.PORTRAIT)
-  }
-
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Home</Text>
-        <Link to="/PostcardView"><Text>{'\n\n'}Postcard</Text></Link>
-        <Link to="/ImagePickerExample"><Text>{'\n\n'}Image Picker</Text></Link>
+      <View style={styles.postcard}>
+        <Text>Stationery</Text>
+        <Text>Press anywhere to start a card!</Text>
       </View>
     )
   }
@@ -22,8 +15,17 @@ class Home extends React.Component {
 export default Home
 
 const styles = StyleSheet.create({
-  container: {
+  postcard: {
     flex: 1,
-    backgroundColor: '#B2784C',
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRightColor: 'gray',
+    borderRightWidth: 1,
+    borderBottomColor: 'gray',
+    borderBottomWidth: 1,
+    margin: 10,
+    padding: 5,
+    shadowOpacity: 0.75,
+    shadowOffset: { width: 2, height: 2 },
   },
 })

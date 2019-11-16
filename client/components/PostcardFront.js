@@ -2,24 +2,20 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native'
 import { ScreenOrientation } from 'expo'
 import { Text } from 'react-native-elements'
-import { Sketch } from './'
+import { Sketch, ChoosePhoto } from './'
 
 class PostcardFront extends React.Component {
   constructor() {
     super()
     this.state = {
-      writing: true,
+      writing: false,
     }
-  }
-
-  componentDidMount() {
-    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE)
   }
 
   render() {
     return (
       <View style={styles.postcard}>
-        <Text>Looking at the front!</Text>
+        <ChoosePhoto />
         {this.state.writing &&
           <Sketch />
         }

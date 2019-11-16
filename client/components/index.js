@@ -1,4 +1,4 @@
-export {default as ImagePickerExample} from './ImagePickerExample'
+export {default as ChoosePhoto} from './ChoosePhoto'
 export {default as Sketch} from './Sketch'
 export {default as PostcardView} from './PostcardView'
 export {default as PostcardFront} from './PostcardFront'

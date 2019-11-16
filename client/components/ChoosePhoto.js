@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, View, Dimensions } from 'react-native';
-import { ScreenOrientation } from 'expo'
+import { StyleSheet, Image, View, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
+import { Ionicons } from '@expo/vector-icons'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default class ImagePickerExample extends React.Component {
+export default class ChoosePhoto extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -21,20 +22,20 @@ export default class ImagePickerExample extends React.Component {
     let { image } = this.state;
 
     return (
-      <React.Fragment>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Button
-            title="Choose a memory to share with a friend."
-            onPress={this._pickImage}
-          />
-          {image &&
-            <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        <View style={styles.container}>
+          {!image ? (
+            <View style={styles.content}>
+              <Text style={{fontSize: 64}}>Stationery.</Text>
+              <TouchableOpacity onPress={this._pickImage}>
+                <Ionicons name="md-images" size={75} />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+          )}
         </View>
-      </React.Fragment>
     );
   }
-
-
 
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
@@ -71,8 +72,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  mapStyle: {
-    width: Dimensions.get('window').width / 2,
-    height: Dimensions.get('window').height / 2,
-  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

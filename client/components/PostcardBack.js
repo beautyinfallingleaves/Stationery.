@@ -18,7 +18,9 @@ class PostcardBack extends React.Component {
   }
 
   render() {
-    const {longitude, latitude} = this.props
+    let {longitude, latitude} = this.props
+    latitude = 41,
+    longitude = -87
 
     return (
       <View style={styles.postcard}>
