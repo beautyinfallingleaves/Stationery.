@@ -16,7 +16,7 @@ class PostcardBack extends React.Component {
         <View style={styles.mapArea}>
           <MapView
             style={styles.mapStyle}
-            scrollEnabled={false}
+            scrollEnabled={true}
             initialRegion={{
               latitude,
               longitude,
