@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
 import { ScreenOrientation } from 'expo'
 import MapView, { Marker } from 'react-native-maps'
 import { Divider, Text } from 'react-native-elements'
+import { Button } from 'native-base'
 import Sketch from './Sketch'
 
 class PostcardBack extends React.Component {

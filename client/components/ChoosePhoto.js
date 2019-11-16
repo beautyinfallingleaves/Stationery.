@@ -25,7 +25,7 @@ export default class ChoosePhoto extends React.Component {
         <View style={styles.container}>
           {!image ? (
             <View style={styles.content}>
-              <Text style={{fontSize: 64}}>Stationery.</Text>
+              <Text style={{fontSize: 64, fontFamily: 'American Typewriter'}}>Stationery.</Text>
               <TouchableOpacity onPress={this._pickImage}>
                 <Ionicons name="md-images" size={75} />
               </TouchableOpacity>

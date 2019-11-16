@@ -1,6 +1,8 @@
 import * as ExpoPixi from 'expo-pixi';
 import React, { Component } from 'react';
-import { Button, Platform, AppState, StyleSheet, View } from 'react-native';
+import { Platform, AppState, StyleSheet, View } from 'react-native';
+import { Button, Text } from 'native-base'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const isAndroid = Platform.OS === 'android';
 function uuidv4() {
@@ -72,14 +74,22 @@ export default class Sketch extends Component {
             <Image style={styles.image} source={this.state.image} />
           </View> */}
         </View>
-        <Button
+        {/* <Button
           color={'blue'}
           title="undo"
           style={styles.button}
           onPress={() => {
             this.sketch.undo();
           }}
-        />
+        /> */}
+        <TouchableOpacity
+          style={styles.undoDraw}
+          onPress={() => {
+            this.sketch.undo();
+          }}
+        >
+          <Button small bordered danger><Text>Undo Draw</Text></Button>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -98,26 +108,24 @@ const styles = StyleSheet.create({
   sketchContainer: {
     flex: 1,
   },
-  image: {
-    flex: 1,
-  },
-  imageContainer: {
-    height: '50%',
-    borderTopWidth: 4,
-    borderTopColor: '#E44262',
-  },
-  label: {
-    width: '100%',
-    padding: 5,
-    alignItems: 'center',
-  },
-  button: {
-    // position: 'absolute',
-    // bottom: 8,
-    // left: 8,
+  undoDraw: {
+    alignSelf: 'flex-start',
     zIndex: 1,
     padding: 12,
-    minWidth: 56,
-    minHeight: 48,
+    minWidth: 35,
+    minHeight: 35,
   },
+  // imageContainer: {
+  //   height: '50%',
+  //   borderTopWidth: 4,
+  //   borderTopColor: '#E44262',
+  // },
+  // image: {
+  //   flex: 1,
+  // },
+  // label: {
+  //   width: '100%',
+  //   padding: 5,
+  //   alignItems: 'center',
+  // },
 });

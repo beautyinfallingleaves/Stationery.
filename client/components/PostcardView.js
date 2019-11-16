@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   controls: {
-    width: 50,
+    width: 55,
     backgroundColor: 'white',
     borderRightColor: '#264A3A',
     borderRightWidth: 1,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    margin: 15,
+    margin: 10,
   }
 });
 
