@@ -1,11 +1,18 @@
 import * as React from 'react';
 import { StyleSheet, Image, View } from 'react-native';
-import * as MagicMove from 'react-native-magic-move'
 import { ScreenOrientation } from 'expo'
 import MapView, { Marker } from 'react-native-maps'
 import { Divider, Text } from 'react-native-elements'
+import { Sketch } from './'
 
 class PostcardBack extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      writing: true,
+    }
+  }
+
   componentDidMount() {
     ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE)
   }
@@ -14,12 +21,7 @@ class PostcardBack extends React.Component {
     const {longitude, latitude} = this.props
 
     return (
-      <MagicMove.View
-        id="postcardMagicView"
-        style={styles.postcard}
-        duration={400}
-        transition={MagicMove.Transition.flip.x}
-      >
+      <View style={styles.postcard}>
         <View style={styles.mapArea}>
           <MapView
             style={styles.mapStyle}
@@ -52,7 +54,10 @@ class PostcardBack extends React.Component {
             <Divider style={styles.divider} />
           </View>
         </View>
-      </MagicMove.View>
+        {this.state.writing &&
+          <Sketch />
+        }
+      </View>
     )
   }
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native'
-import * as MagicMove from 'react-native-magic-move'
+import { Link } from 'react-router-native'
 import { ScreenOrientation } from 'expo'
 import { Text } from 'react-native-elements'
 
@@ -11,14 +11,10 @@ class PostcardFront extends React.Component {
 
   render() {
     return (
-        <MagicMove.View
-          id="postcardMagicView"
-          style={styles.postcard}
-          duration={400}
-          transition={MagicMove.Transition.flip.x}
-        >
-          <Text>Looking at the front!</Text>
-        </MagicMove.View>
+      <View style={styles.postcard}>
+        <Text>Looking at the front!</Text>
+        <Link to='/PostcardBack'><Text>{'\n\n'}Look at the back now!</Text></Link>
+      </View>
     )
   }
 }

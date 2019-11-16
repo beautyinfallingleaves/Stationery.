@@ -1,6 +1,6 @@
 export {default as ImagePickerExample} from './ImagePickerExample'
 export {default as Sketch} from './Sketch'
-export {default as Postcard} from './Postcard'
+export {default as PostcardView} from './PostcardView'
 export {default as PostcardFront} from './PostcardFront'
 export {default as PostcardBack} from './PostcardBack'
 export {default as Home} from './Home'
