@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, View, ImageBackground, Button } from 'react-native';
-import { NativeRouter, Route, Link } from 'react-router-native'
+import { StyleSheet, View, Button } from 'react-native';
 import { ScreenOrientation } from 'expo'
 import { Text } from 'react-native-elements'
+import { PostcardFront, PostcardBack } from './'
 import { Ionicons } from '@expo/vector-icons'
-import { Sketch, PostcardFront, PostcardBack, ImagePickerExample } from '.'
+import CardFlip from 'react-native-card-flip'
 
 class PostcardView extends React.Component {
   componentDidMount() {
@@ -13,18 +13,16 @@ class PostcardView extends React.Component {
 
   render() {
     return (
-      <ImageBackground source={require('../../assets/bkgd_table.jpg')} style={{width: '100%', height: '100%'}}>
-        <View style={styles.root}>
-          <NativeRouter>
-            <Route exact path='/' component={PostcardFront} />
-            <Route path='/PostcardFront' component={PostcardFront} />
-            <Route path='/PostcardBack' component={PostcardBack} />
-          </NativeRouter>
-          <View style={styles.controls}>
-            <Text>Some controls!</Text>
-          </View>
+      <View style={styles.root}>
+        <CardFlip style={styles.flipCard} ref={(card) => this.card = card} >
+          <PostcardFront />
+          <PostcardBack />
+        </CardFlip>
+        <View style={styles.controls}>
+          <Text>Some controls!</Text>
+          <Button title="FLIP" onPress={() => this.card.flip()} />
         </View>
-      </ImageBackground>
+      </View>
     )
   }
 }
@@ -36,6 +34,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: '100%',
     width: '100%',
+    backgroundColor: '#B2784C',
+  },
+  flipCard: {
+    flex: 1,
   },
   controls: {
     width: '10%',

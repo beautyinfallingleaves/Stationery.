@@ -1,10 +1,17 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native'
-import { Link } from 'react-router-native'
 import { ScreenOrientation } from 'expo'
 import { Text } from 'react-native-elements'
+import { Sketch } from './'
 
 class PostcardFront extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      writing: true,
+    }
+  }
+
   componentDidMount() {
     ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE)
   }
@@ -13,7 +20,9 @@ class PostcardFront extends React.Component {
     return (
       <View style={styles.postcard}>
         <Text>Looking at the front!</Text>
-        <Link to='/PostcardBack'><Text>{'\n\n'}Look at the back now!</Text></Link>
+        {this.state.writing &&
+          <Sketch />
+        }
       </View>
     )
   }
