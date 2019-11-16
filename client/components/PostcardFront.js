@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native'
-import { ScreenOrientation } from 'expo'
-import { Text } from 'react-native-elements'
-import { Sketch, ChoosePhoto } from './'
+import Sketch from './Sketch'
+import ChoosePhoto from './ChoosePhoto'
 
 class PostcardFront extends React.Component {
   constructor() {

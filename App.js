@@ -1,8 +1,7 @@
 import React from 'react';
 // import { NativeRouter, Route } from 'react-router-native'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import CardFlip from 'react-native-card-flip'
-import {Home, PostcardView, ImagePickerExample} from './client/components'
+import { StatusBar } from 'react-native'
+import {PostcardView} from './client/components'
 
 export default function App() {
   return (
@@ -12,6 +11,9 @@ export default function App() {
     //   <Route path='/ImagePickerExample' component={ImagePickerExample} />
     // </NativeRouter>
 
-    <PostcardView />
+    <React.Fragment>
+      <StatusBar hidden />
+      <PostcardView />
+    </React.Fragment>
   );
 }

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
-import { ScreenOrientation } from 'expo'
-import { Text } from 'react-native-elements'
-import { Home, PostcardFront, PostcardBack } from './'
+import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import CardFlip from 'react-native-card-flip'
+import PostcardFront from './PostcardFront'
+import PostcardBack from './PostcardBack'
 
 class PostcardView extends React.Component {
   render() {
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   controls: {
-    width: 60,
+    width: 50,
     backgroundColor: 'white',
     borderRightColor: '#264A3A',
     borderRightWidth: 1,

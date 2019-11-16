@@ -1,7 +1,6 @@
-import Expo from 'expo';
 import * as ExpoPixi from 'expo-pixi';
 import React, { Component } from 'react';
-import { Image, Button, Platform, AppState, StyleSheet, Text, View } from 'react-native';
+import { Button, Platform, AppState, StyleSheet, View } from 'react-native';
 
 const isAndroid = Platform.OS === 'android';
 function uuidv4() {
@@ -18,7 +17,6 @@ export default class Sketch extends Component {
     image: null,
     strokeColor: 'black',
     strokeWidth: 3,
-    // lines: [],
     appState: AppState.currentState,
   };
 
@@ -65,7 +63,6 @@ export default class Sketch extends Component {
               strokeAlpha={1}
               onChange={this.onChangeAsync}
               onReady={this.onReady}
-              // initialLines={this.state.lines}
             />
           </View>
           {/* <View style={styles.imageContainer}>
