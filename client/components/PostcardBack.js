@@ -1,25 +1,14 @@
 import * as React from 'react';
-import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux'
+import { StyleSheet, Image, View } from 'react-native';
 import { ScreenOrientation } from 'expo'
 import MapView, { Marker } from 'react-native-maps'
 import { Divider, Text } from 'react-native-elements'
-import { Button } from 'native-base'
 import Sketch from './Sketch'
 
 class PostcardBack extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      writing: true,
-    }
-  }
-
-  componentDidMount() {
-    ScreenOrientation.lockAsync(ScreenOrientation.Orientation.LANDSCAPE)
-  }
-
   render() {
-    let {longitude, latitude} = this.props
+    let {longitude, latitude, isWriting} = this.props
     latitude = 41,
     longitude = -87
 
@@ -57,7 +46,7 @@ class PostcardBack extends React.Component {
             <Divider style={styles.divider} />
           </View>
         </View>
-        {this.state.writing &&
+        {isWriting &&
           <Sketch />
         }
       </View>
@@ -104,4 +93,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostcardBack
+const mapState = state => {
+  return {
+    isWriting: state.isWriting,
+  }
+}
+
+export default connect(mapState)(PostcardBack)

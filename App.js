@@ -1,7 +1,9 @@
 import React from 'react';
-// import { NativeRouter, Route } from 'react-router-native'
 import { StatusBar } from 'react-native'
-import {PostcardView} from './client/components'
+import { PostcardView } from './client/components'
+import { Provider } from 'react-redux'
+import store from './client/store'
+// import { NativeRouter, Route } from 'react-router-native'
 
 export default function App() {
   return (
@@ -11,9 +13,9 @@ export default function App() {
     //   <Route path='/ImagePickerExample' component={ImagePickerExample} />
     // </NativeRouter>
 
-    <React.Fragment>
+    <Provider store={store}>
       <StatusBar hidden />
       <PostcardView />
-    </React.Fragment>
+    </Provider>
   );
 }

@@ -49,7 +49,7 @@ export default class Sketch extends Component {
   };
 
   onReady = () => {
-    console.log('ready!');
+    console.log('Sketching is ready!');
   };
 
   render() {

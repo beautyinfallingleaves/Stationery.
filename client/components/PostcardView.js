@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { connect } from 'react-redux'
+import { toggleIsWriting } from '../store/isWriting'
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -8,6 +10,8 @@ import PostcardBack from './PostcardBack'
 
 class PostcardView extends React.Component {
   render() {
+    const { toggleWriting } = this.props
+
     return (
       <View style={styles.root}>
         <View style={styles.controls}>
@@ -17,7 +21,7 @@ class PostcardView extends React.Component {
           <TouchableOpacity>
             <Ionicons name="ios-map" size={35} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleWriting()}>
             <Ionicons name="md-brush" size={35} />
           </TouchableOpacity>
           <TouchableOpacity>
@@ -67,4 +71,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PostcardView
+const mapState = state => {
+  return {
+    isWriting: state.isWriting
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    toggleWriting: () => dispatch(toggleIsWriting())
+  }
+}
+
+export default connect(mapState, mapDispatch)(PostcardView)
