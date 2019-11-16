@@ -1,3 +1,5 @@
+const defaultState = false
+
 const TOGGLE_ISWRITING = 'TOGGLE_ISWRITING'
 
 export const toggleIsWriting = () => {
@@ -6,7 +8,7 @@ export const toggleIsWriting = () => {
   }
 }
 
-const isWritingReducer = (state = false, action) => {
+const isWritingReducer = (state = defaultState, action) => {
   switch (action.type) {
     case TOGGLE_ISWRITING:
       return !state

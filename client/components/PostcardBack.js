@@ -7,9 +7,9 @@ import Sketch from './Sketch'
 
 class PostcardBack extends React.Component {
   render() {
-    let {longitude, latitude, isWriting} = this.props
-    latitude = 41,
-    longitude = -87
+    const { imageData, isWriting } = this.props
+    const latitude = imageData.latitude || 41.89555
+    const longitude = imageData.longitude || -87.638925
 
     return (
       <View style={styles.postcard}>
@@ -53,6 +53,14 @@ class PostcardBack extends React.Component {
   }
 }
 
+const mapState = state => {
+  return {
+    isWriting: state.isWriting,
+    imageData: state.imageData,
+  }
+}
+
+export default connect(mapState)(PostcardBack)
 
 const styles = StyleSheet.create({
   postcard: {
@@ -92,10 +100,3 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapState = state => {
-  return {
-    isWriting: state.isWriting,
-  }
-}
-
-export default connect(mapState)(PostcardBack)
