@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { StyleSheet, Image, View } from 'react-native';
-import { ScreenOrientation } from 'expo'
 import MapView, { Marker } from 'react-native-maps'
 import { Divider, Text } from 'react-native-elements'
 import Sketch from './Sketch'

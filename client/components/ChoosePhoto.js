@@ -31,7 +31,10 @@ export default class ChoosePhoto extends React.Component {
               </TouchableOpacity>
             </View>
           ) : (
-            <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+            <Image
+              source={{ uri: image }}
+              style={{ width: '100%', height: '100%' }}
+            />
           )}
         </View>
     );
