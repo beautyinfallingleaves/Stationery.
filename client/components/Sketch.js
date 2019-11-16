@@ -74,18 +74,10 @@ export default class Sketch extends Component {
             <Image style={styles.image} source={this.state.image} />
           </View> */}
         </View>
-        {/* <Button
-          color={'blue'}
-          title="undo"
-          style={styles.button}
-          onPress={() => {
-            this.sketch.undo();
-          }}
-        /> */}
         <TouchableOpacity
           style={styles.undoDraw}
           onPress={() => {
-            this.sketch.undo();
+            this.sketch.undo()
           }}
         >
           <Button small bordered danger><Text>Undo Draw</Text></Button>

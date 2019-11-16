@@ -25,9 +25,13 @@ class PostcardView extends React.Component {
               }}>
                 <Ionicons name="ios-swap" size={35} />
               </TouchableOpacity>
-              <TouchableOpacity>
-                <Ionicons name="ios-map" size={35} />
-              </TouchableOpacity>
+              {currentSide === 'back' ? (
+                <TouchableOpacity>
+                  <Ionicons name="ios-map" size={35} />
+                </TouchableOpacity>
+              ) : (
+                <React.Fragment />
+              )}
               <TouchableOpacity onPress={() => toggleWriting()}>
                 <Ionicons name={isWriting ? ("md-save") : ("md-brush")} size={35} />
               </TouchableOpacity>
