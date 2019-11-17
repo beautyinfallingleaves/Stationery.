@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
-import { setImagePostcardFront } from '../store/imagePostcardFront'
 import { setCurrentSide } from '../store/currentSide'
 import { removeImageData } from '../store/imageData'
+import { toggleIsWriting } from '../store/isWriting'
+import { setImagePostcardFront } from '../store/imagePostcardFront'
+import { setImagePostcardBack } from '../store/imagePostcardBack'
 import { removeImagePostcardFront } from '../store/imagePostcardFront'
 import { removeImagePostcardBack } from '../store/imagePostcardBack'
-import { toggleIsWriting } from '../store/isWriting'
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -19,6 +20,11 @@ class PostcardView extends React.Component {
   setImagePostcardFront = async () => {
     const uri = await takeSnapshotAsync(this.props.postcardFrontView)
     this.props.setImageFront(uri)
+  }
+
+  setImagePostcardBack = async () => {
+    const uri = await takeSnapshotAsync(this.props.postcardBackView)
+    this.props.setImageBack(uri)
   }
 
   render() {
@@ -60,7 +66,10 @@ class PostcardView extends React.Component {
               }}>
                 <Ionicons name="ios-trash" size={35} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.setImagePostcardFront}>
+              <TouchableOpacity onPress={() => {
+                  this.setImagePostcardFront()
+                  this.setImagePostcardBack()
+              }}>
                 <Ionicons name="md-paper-plane" size={35} />
               </TouchableOpacity>
             </React.Fragment>
@@ -92,7 +101,8 @@ const mapDispatch = dispatch => {
     removeImageFront: () => dispatch(removeImagePostcardFront()),
     removeImageBack: () => dispatch(removeImagePostcardBack()),
     toggleWriting: () => dispatch(toggleIsWriting()),
-    setImageFront: (imageUri) => dispatch(setImagePostcardFront(imageUri))
+    setImageFront: (imageUri) => dispatch(setImagePostcardFront(imageUri)),
+    setImageBack: (imageUri) => dispatch(setImagePostcardBack(imageUri)),
   }
 }
 
