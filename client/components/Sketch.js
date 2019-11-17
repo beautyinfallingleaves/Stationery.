@@ -18,30 +18,30 @@ export default class Sketch extends Component {
   state = {
     image: null,
     strokeColor: 'black',
-    strokeWidth: 3,
+    strokeWidth: 4,
     appState: AppState.currentState,
   };
 
   handleAppStateChangeAsync = nextAppState => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       if (isAndroid && this.sketch) {
-        this.setState({ appState: nextAppState, id: uuidv4(), lines: this.sketch.lines });
-        return;
+        this.setState({ appState: nextAppState, id: uuidv4(), lines: this.sketch.lines })
+        return
       }
     }
-    this.setState({ appState: nextAppState });
+    this.setState({ appState: nextAppState })
   };
 
   componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChangeAsync);
+    AppState.addEventListener('change', this.handleAppStateChangeAsync)
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChangeAsync);
+    AppState.removeEventListener('change', this.handleAppStateChangeAsync)
   }
 
   onChangeAsync = async () => {
-    const { uri } = await this.sketch.takeSnapshotAsync();
+    const { uri } = await this.sketch.takeSnapshotAsync()
 
     this.setState({
       image: { uri },
@@ -49,31 +49,21 @@ export default class Sketch extends Component {
   };
 
   onReady = () => {
-    console.log('Sketching is ready!');
+    console.log('Sketching is ready!')
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.container}>
-          <View style={styles.sketchContainer}>
-            <ExpoPixi.Sketch
-              ref={ref => (this.sketch = ref)}
-              style={styles.sketch}
-              strokeColor={this.state.strokeColor}
-              strokeWidth={this.state.strokeWidth}
-              strokeAlpha={1}
-              onChange={this.onChangeAsync}
-              onReady={this.onReady}
-            />
-          </View>
-          {/* <View style={styles.imageContainer}>
-            <View style={styles.label}>
-              <Text>Snapshot</Text>
-            </View>
-            <Image style={styles.image} source={this.state.image} />
-          </View> */}
-        </View>
+        <ExpoPixi.Sketch
+          ref={sketch => (this.sketch = sketch)}
+          style={styles.sketch}
+          strokeColor={this.state.strokeColor}
+          strokeWidth={this.state.strokeWidth}
+          strokeAlpha={1}
+          onChange={this.onChangeAsync}
+          onReady={this.onReady}
+        />
         <TouchableOpacity
           style={styles.undoDraw}
           onPress={() => {
@@ -83,7 +73,7 @@ export default class Sketch extends Component {
           <Button small bordered danger><Text>Undo Draw</Text></Button>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
@@ -97,9 +87,6 @@ const styles = StyleSheet.create({
   sketch: {
     flex: 1,
   },
-  sketchContainer: {
-    flex: 1,
-  },
   undoDraw: {
     alignSelf: 'flex-start',
     zIndex: 1,
@@ -107,17 +94,4 @@ const styles = StyleSheet.create({
     minWidth: 35,
     minHeight: 35,
   },
-  // imageContainer: {
-  //   height: '50%',
-  //   borderTopWidth: 4,
-  //   borderTopColor: '#E44262',
-  // },
-  // image: {
-  //   flex: 1,
-  // },
-  // label: {
-  //   width: '100%',
-  //   padding: 5,
-  //   alignItems: 'center',
-  // },
-});
+})

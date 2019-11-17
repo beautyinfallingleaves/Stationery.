@@ -1,18 +1,27 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
+import { setPostcardBackView } from '../store/postcardBackView'
 import { StyleSheet, Image, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps'
 import { Divider, Text } from 'react-native-elements'
 import Sketch from './Sketch'
 
 class PostcardBack extends React.Component {
+  componentDidMount() {
+    this.props.setBackView(this.postcardBack)
+  }
+
   render() {
     const { imageData, isWriting } = this.props
     const latitude = imageData.latitude || 41.89555
     const longitude = imageData.longitude || -87.638925
 
     return (
-      <View style={styles.postcard}>
+      <View
+        style={styles.postcard}
+        collapsable={false}
+        ref={view => (this.postcardBack = view)}
+      >
         <View style={styles.mapArea}>
           <MapView
             style={styles.mapStyle}
@@ -60,7 +69,13 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(PostcardBack)
+const mapDispatch = dispatch => {
+  return {
+    setBackView: (viewObj) => dispatch(setPostcardBackView(viewObj))
+  }
+}
+
+export default connect(mapState, mapDispatch)(PostcardBack)
 
 const styles = StyleSheet.create({
   postcard: {

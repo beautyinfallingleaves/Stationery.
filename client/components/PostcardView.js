@@ -1,16 +1,24 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
+import { setImagePostcardFront } from '../store/imagePostcardFront'
 import { setCurrentSide } from '../store/currentSide'
 import { removeImageData } from '../store/imageData'
 import { toggleIsWriting } from '../store/isWriting'
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import CardFlip from 'react-native-card-flip'
 import PostcardFront from './PostcardFront'
 import PostcardBack from './PostcardBack'
 
 class PostcardView extends React.Component {
+  // FOR TESTING SNAPSHOTS ONLY
+  setImagePostcardFront = async () => {
+    const uri = await takeSnapshotAsync(this.props.postcardFrontView)
+    this.props.setImageFront(uri)
+  }
+
   render() {
     const { currentSide, imageData, isWriting, setSide, removeImage, toggleWriting } = this.props
 
@@ -48,7 +56,7 @@ class PostcardView extends React.Component {
               }}>
                 <Ionicons name="ios-trash" size={35} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.setImagePostcardFront}>
                 <Ionicons name="md-paper-plane" size={35} />
               </TouchableOpacity>
             </React.Fragment>
@@ -68,6 +76,8 @@ const mapState = state => {
     currentSide: state.currentSide,
     imageData: state.imageData,
     isWriting: state.isWriting,
+    postcardFrontView: state.postcardFrontView,
+    postcardBackView: state.postcardBackView,
   }
 }
 
@@ -76,6 +86,7 @@ const mapDispatch = dispatch => {
     setSide: (side) => dispatch(setCurrentSide(side)),
     removeImage: () => dispatch(removeImageData()),
     toggleWriting: () => dispatch(toggleIsWriting()),
+    setImageFront: (imageUri) => dispatch(setImagePostcardFront(imageUri))
   }
 }
 
