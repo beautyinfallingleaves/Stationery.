@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { setImagePostcardFront } from '../store/imagePostcardFront'
 import { setCurrentSide } from '../store/currentSide'
 import { removeImageData } from '../store/imageData'
+import { removeImagePostcardFront } from '../store/imagePostcardFront'
+import { removeImagePostcardBack } from '../store/imagePostcardBack'
 import { toggleIsWriting } from '../store/isWriting'
 import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
@@ -20,7 +22,7 @@ class PostcardView extends React.Component {
   }
 
   render() {
-    const { currentSide, imageData, isWriting, setSide, removeImage, toggleWriting } = this.props
+    const { currentSide, imageData, isWriting, setSide, removeImage, removeImageFront, removeImageBack, toggleWriting } = this.props
 
     return (
       <View style={styles.root}>
@@ -48,6 +50,8 @@ class PostcardView extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
                   removeImage()
+                  removeImageFront()
+                  removeImageBack()
                   if (isWriting) toggleWriting()
                   if (currentSide === 'back') {
                     setSide('front')
@@ -85,6 +89,8 @@ const mapDispatch = dispatch => {
   return {
     setSide: (side) => dispatch(setCurrentSide(side)),
     removeImage: () => dispatch(removeImageData()),
+    removeImageFront: () => dispatch(removeImagePostcardFront()),
+    removeImageBack: () => dispatch(removeImagePostcardBack()),
     toggleWriting: () => dispatch(toggleIsWriting()),
     setImageFront: (imageUri) => dispatch(setImagePostcardFront(imageUri))
   }
