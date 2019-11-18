@@ -7,7 +7,7 @@ import { setImagePostcardFront } from '../store/imagePostcardFront'
 import { setImagePostcardBack } from '../store/imagePostcardBack'
 import { removeImagePostcardFront } from '../store/imagePostcardFront'
 import { removeImagePostcardBack } from '../store/imagePostcardBack'
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, CameraRoll, ImagePickerIOS } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
@@ -15,25 +15,61 @@ import CardFlip from 'react-native-card-flip'
 import PostcardFront from './PostcardFront'
 import PostcardBack from './PostcardBack'
 import axios from 'axios'
-
-
+// import * as MailComposer from 'expo-mail-composer'
+import * as firebase from 'firebase'
+import uuid from 'uuid'
 
 class PostcardView extends React.Component {
-  // FOR TESTING SNAPSHOTS ONLY
-  setImagePostcardFront = async () => {
-    const uri = await takeSnapshotAsync(this.props.postcardFrontView)
-    this.props.setImageFront(uri)
+  uploadImage = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function(e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(uuid.v4());
+    const snapshot = await ref.put(blob);
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    return await snapshot.ref.getDownloadURL();
   }
 
-  setImagePostcardBack = async () => {
-    const uri = await takeSnapshotAsync(this.props.postcardBackView)
-    this.props.setImageBack(uri)
-  }
+  handleSend = async (recipient) => {
+    const frontImageUri = await takeSnapshotAsync(this.props.postcardFrontView)
+    const frontImageFirebaseUrl = await this.uploadImage(frontImageUri)
+    this.props.setImageFront(frontImageFirebaseUrl)
 
-  handleSend() {
+    const backImageUri = await takeSnapshotAsync(this.props.postcardBackView)
+    const backImageFirebaseUrl = await this.uploadImage(backImageUri)
+    this.props.setImageBack(backImageFirebaseUrl)
+
+    // await MailComposer.composeAsync({
+    //   recipients: [recipient],
+    //   subject: 'Check out my postcard!',
+    //   isHtml: true,
+    //   body: `<html><body><img src="${frontImageFirebaseUrl}" /><div/><img src="${backImageFirebaseUrl}" /></body></html>`,
+    // })
+
     const sendPostcard = async () => {
       try {
-        await axios.post('http://5d9bf357.ngrok.io/api/email')
+        await axios.post('http://cdcd0bfe.ngrok.io/api/email', {
+          recipient,
+          frontImageFirebaseUrl,
+          backImageFirebaseUrl,
+        })
       } catch (err) {
         console.error('There was an issue sending your postcard.')
       }
@@ -81,8 +117,9 @@ class PostcardView extends React.Component {
               }}>
                 <Ionicons name="ios-trash" size={35} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {
-                  this.handleSend()
+              <TouchableOpacity onPress={async () => {
+                const recipient = 'beautyinfallingleaves@gmail.com'
+                this.handleSend(recipient)
               }}>
                 <Ionicons name="md-paper-plane" size={35} />
               </TouchableOpacity>
@@ -105,6 +142,8 @@ const mapState = state => {
     isWriting: state.isWriting,
     postcardFrontView: state.postcardFrontView,
     postcardBackView: state.postcardBackView,
+    imagePostcardFront: state.imagePostcardFront,
+    imagePostcardBack: state.imagePostcardBack,
   }
 }
 
