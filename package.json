@@ -2,17 +2,25 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "start-server": "nodemon server -e html,js,scss --ignore client",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "axios": "^0.19.0",
+    "compression": "^1.7.4",
     "expo": "^35.0.1",
     "expo-gl": "~7.0.0",
     "expo-image-picker": "~7.0.0",
     "expo-pixi": "^1.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
     "native-base": "^2.13.8",
+    "ngrok": "^3.2.5",
+    "path": "^0.12.7",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
@@ -25,12 +33,12 @@
     "react-native-router-flux": "v4.2.0-beta.x",
     "react-native-screens": "~1.0.0-alpha.23",
     "react-native-vector-icons": "^6.6.0",
+    "react-native-view-shot": "~2.6.0",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
     "react-redux": "^7.1.3",
     "react-router-native": "^5.1.2",
-    "redux": "^4.0.4",
-    "react-native-view-shot": "~2.6.0"
+    "redux": "^4.0.4"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"

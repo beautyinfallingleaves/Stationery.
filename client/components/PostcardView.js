@@ -14,6 +14,9 @@ import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import CardFlip from 'react-native-card-flip'
 import PostcardFront from './PostcardFront'
 import PostcardBack from './PostcardBack'
+import axios from 'axios'
+
+
 
 class PostcardView extends React.Component {
   // FOR TESTING SNAPSHOTS ONLY
@@ -25,6 +28,18 @@ class PostcardView extends React.Component {
   setImagePostcardBack = async () => {
     const uri = await takeSnapshotAsync(this.props.postcardBackView)
     this.props.setImageBack(uri)
+  }
+
+  handleSend() {
+    const sendPostcard = async () => {
+      try {
+        await axios.post('http://5d9bf357.ngrok.io/api/email')
+      } catch (err) {
+        console.error('There was an issue sending your postcard.')
+      }
+    }
+
+    sendPostcard()
   }
 
   render() {
@@ -67,8 +82,7 @@ class PostcardView extends React.Component {
                 <Ionicons name="ios-trash" size={35} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                  this.setImagePostcardFront()
-                  this.setImagePostcardBack()
+                  this.handleSend()
               }}>
                 <Ionicons name="md-paper-plane" size={35} />
               </TouchableOpacity>
