@@ -65,7 +65,7 @@ class PostcardView extends React.Component {
 
     const sendPostcard = async () => {
       try {
-        await axios.post('http://cdcd0bfe.ngrok.io/api/email', {
+        await axios.post('http://1328e46b.ngrok.io/api/email', {
           recipient,
           frontImageFirebaseUrl,
           backImageFirebaseUrl,

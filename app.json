@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Trying Stuff in React Native",
-    "slug": "react-native-tryingstuff",
+    "name": "Stationery.",
+    "slug": "stationery",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
