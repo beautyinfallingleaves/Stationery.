@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: '100%',
     width: '100%',
-    backgroundColor: '#77CAA6',
+    backgroundColor: '#3FBFBF',
   },
   flipCard: {
     flex: 1,
