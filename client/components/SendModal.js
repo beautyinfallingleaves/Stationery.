@@ -82,18 +82,18 @@ class SendModal extends React.Component {
       >
         <View style={styles.container}>
           <View style={styles.modal}>
-            {sendAttempted ? (
-              <View>
-                {sendSucceeded &&
-                  <Text>Your Stationery has been sent!</Text>
-                }
-                {sendFailed &&
-                  <Text>There was an issue sending your postcard.</Text>
-                }
-              </View>
-            ) : (
-              <React.Fragment>
-                <View style={styles.content}>
+            <View style={styles.content}>
+              {sendAttempted ? (
+                <View>
+                  {sendSucceeded &&
+                    <Text>Your Stationery has been sent!</Text>
+                  }
+                  {sendFailed &&
+                    <Text>There was an issue sending your postcard.</Text>
+                  }
+                </View>
+              ) : (
+                <React.Fragment>
                   <Text>Send to:</Text>
                   <TextInput
                     value={this.state.recipient}
@@ -109,18 +109,17 @@ class SendModal extends React.Component {
                   >
                     <Text>Send</Text>
                   </TouchableOpacity>
-                </View>
-                <View style={styles.closeButtonContainer}>
-                  <TouchableOpacity
-                    onPress={toggleSendModalVisible}>
-                      <View style={styles.closeButton}>
-                        <Text>Close</Text>
-                      </View>
-                  </TouchableOpacity>
-                </View>
-
-              </React.Fragment>
-            )}
+                </React.Fragment>
+              )}
+            </View>
+            <View style={styles.closeButtonContainer}>
+              <TouchableOpacity
+                onPress={toggleSendModalVisible}>
+                  <View style={styles.closeButton}>
+                    <Text>Close</Text>
+                  </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
