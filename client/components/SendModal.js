@@ -21,9 +21,10 @@ class SendModal extends React.Component {
 
     this.state = {
       recipient: '',
+      sendAttempted: false,
+      sendSucceeded: false,
+      sendFailed: false,
     }
-
-    // this.handleSend = this.handleSend.bind(this)
   }
 
   handleSend = async () => {
@@ -33,8 +34,8 @@ class SendModal extends React.Component {
       postcardBackView,
       setImagePostcardFront,
       setImagePostcardBack,
+      toggleSendModalVisible,
     } = this.props
-    console.log('Sending to ' + recipient)
 
     // Prepare images for sending
     const frontImageUri = await takeSnapshotAsync(postcardFrontView)
@@ -47,17 +48,26 @@ class SendModal extends React.Component {
 
     // Post details to email send API route
     try {
+      this.setState({ sendAttempted: true })
+
       await axios.post('http://c092f327.ngrok.io/api/email', {
         recipient,
         frontImageFirebaseUrl,
         backImageFirebaseUrl,
       })
+
+      this.setState({ sendSucceeded: true })
     } catch (err) {
-      console.error('There was an issue sending your postcard.')
+      this.setState({ sendFailed: true })
     }
   }
 
   render() {
+    const {
+      sendAttempted,
+      sendSucceeded,
+      sendFailed,
+    } = this.state
     const {
       sendModalVisible,
       toggleSendModalVisible,
@@ -65,37 +75,52 @@ class SendModal extends React.Component {
 
     return (
       <Modal
-        animationType="fade"
+        animationType='fade'
         transparent={true}
         visible={sendModalVisible}
         supportedOrientations={['landscape-left']}
       >
         <View style={styles.container}>
           <View style={styles.modal}>
-            <View style={styles.content}>
-              <Text>Send to:</Text>
-              <TextInput
-                value={this.state.recipient}
-                onChangeText={(recipient) => this.setState({ recipient })}
-                placeholder={'Recipient Email'}
-                style={styles.input}
-              />
-              <TouchableOpacity
-                onPress={this.handleSend}
-              >
-                <Text>Send</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.closeButtonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  toggleSendModalVisible()
-                }}>
-                  <View style={styles.closeButton}>
-                    <Text>Close</Text>
-                  </View>
-              </TouchableOpacity>
-            </View>
+            {sendAttempted ? (
+              <View>
+                {sendSucceeded &&
+                  <Text>Your Stationery has been sent!</Text>
+                }
+                {sendFailed &&
+                  <Text>There was an issue sending your postcard.</Text>
+                }
+              </View>
+            ) : (
+              <React.Fragment>
+                <View style={styles.content}>
+                  <Text>Send to:</Text>
+                  <TextInput
+                    value={this.state.recipient}
+                    onChangeText={(recipient) => this.setState({ recipient })}
+                    placeholder={'Enter recipient\'s email'}
+                    placeholderTextColor='#90ABAB'
+                    autoCompleteType='email'
+                    keyboardType='email-address'
+                    style={styles.input}
+                  />
+                  <TouchableOpacity
+                    onPress={this.handleSend}
+                  >
+                    <Text>Send</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.closeButtonContainer}>
+                  <TouchableOpacity
+                    onPress={toggleSendModalVisible}>
+                      <View style={styles.closeButton}>
+                        <Text>Close</Text>
+                      </View>
+                  </TouchableOpacity>
+                </View>
+
+              </React.Fragment>
+            )}
           </View>
         </View>
       </Modal>
@@ -108,8 +133,6 @@ const mapState = state => {
     sendModalVisible: state.sendModalVisible,
     postcardFrontView: state.postcardFrontView,
     postcardBackView: state.postcardBackView,
-    imagePostcardFront: state.imagePostcardFront,
-    imagePostcardBack: state.imagePostcardBack,
   }
 }
 

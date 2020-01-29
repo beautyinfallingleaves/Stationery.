@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { setCurrentSide } from '../store/currentSide'
 import { removeImageData } from '../store/imageData'
 import { toggleIsWriting } from '../store/isWriting'
-import { setImagePostcardFront } from '../store/imagePostcardFront'
-import { setImagePostcardBack } from '../store/imagePostcardBack'
 import { removeImagePostcardFront } from '../store/imagePostcardFront'
 import { removeImagePostcardBack } from '../store/imagePostcardBack'
 import { toggleSendModalVisible } from '../store/sendModalVisible'
@@ -12,42 +10,13 @@ import { StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import CardFlip from 'react-native-card-flip'
 import PostcardFront from './PostcardFront'
 import PostcardBack from './PostcardBack'
 import SendModal from './SendModal'
-import axios from 'axios'
 // import * as MailComposer from 'expo-mail-composer'
-import { uploadImageToFirebaseStorage } from '../utils'
 
 class PostcardView extends React.Component {
-  handleSend = async (recipient) => {
-    // Prepare images for sending
-    const frontImageUri = await takeSnapshotAsync(this.props.postcardFrontView)
-    const frontImageFirebaseUrl = await uploadImageToFirebaseStorage(frontImageUri)
-    this.props.setImageFront(frontImageFirebaseUrl)
-
-    const backImageUri = await takeSnapshotAsync(this.props.postcardBackView)
-    const backImageFirebaseUrl = await uploadImageToFirebaseStorage(backImageUri)
-    this.props.setImageBack(backImageFirebaseUrl)
-
-
-    const sendPostcard = async () => {
-      try {
-        await axios.post('http://c092f327.ngrok.io/api/email', {
-          recipient,
-          frontImageFirebaseUrl,
-          backImageFirebaseUrl,
-        })
-      } catch (err) {
-        console.error('There was an issue sending your postcard.')
-      }
-    }
-
-    sendPostcard()
-  }
-
   render() {
     const {
       currentSide,
@@ -113,11 +82,7 @@ class PostcardView extends React.Component {
               }}>
                 <Ionicons name="ios-trash" size={35} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {
-                // const recipient = 'beautyinfallingleaves@gmail.com'
-                // this.handleSend(recipient)
-                toggleSendModalVisible()
-              }}>
+              <TouchableOpacity onPress={toggleSendModalVisible}>
                 <Ionicons name="md-paper-plane" size={35} />
               </TouchableOpacity>
             </React.Fragment>
@@ -137,10 +102,6 @@ const mapState = state => {
     currentSide: state.currentSide,
     imageData: state.imageData,
     isWriting: state.isWriting,
-    postcardFrontView: state.postcardFrontView,
-    postcardBackView: state.postcardBackView,
-    imagePostcardFront: state.imagePostcardFront,
-    imagePostcardBack: state.imagePostcardBack,
     sendModalVisible: state.sendModalVisible,
   }
 }
@@ -152,8 +113,6 @@ const mapDispatch = dispatch => {
     removeImageFront: () => dispatch(removeImagePostcardFront()),
     removeImageBack: () => dispatch(removeImagePostcardBack()),
     toggleWriting: () => dispatch(toggleIsWriting()),
-    setImageFront: (imageUri) => dispatch(setImagePostcardFront(imageUri)),
-    setImageBack: (imageUri) => dispatch(setImagePostcardBack(imageUri)),
     toggleSendModalVisible: () => dispatch(toggleSendModalVisible()),
   }
 }
