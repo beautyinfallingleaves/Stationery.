@@ -8,7 +8,7 @@ import { setImagePostcardBack } from '../store/imagePostcardBack'
 import { removeImagePostcardFront } from '../store/imagePostcardFront'
 import { removeImagePostcardBack } from '../store/imagePostcardBack'
 import { toggleSendModalVisible } from '../store/sendModalVisible'
-import { StyleSheet, View, CameraRoll, ImagePickerIOS } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
