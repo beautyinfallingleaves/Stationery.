@@ -15,16 +15,19 @@ import {
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import { uploadImageToFirebaseStorage } from '../utils'
 
+const initialSendModalState = {
+  recipient: '',
+  sendAttempted: false,
+  sendAttemptInProgress: false,
+  sendSucceeded: false,
+  sendFailed: false,
+}
+
 class SendModal extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      recipient: '',
-      sendAttempted: false,
-      sendSucceeded: false,
-      sendFailed: false,
-    }
+    this.state = initialSendModalState
   }
 
   handleSend = async () => {
@@ -34,8 +37,10 @@ class SendModal extends React.Component {
       postcardBackView,
       setImagePostcardFront,
       setImagePostcardBack,
-      toggleSendModalVisible,
     } = this.props
+
+    this.setState({ sendAttempted: true })
+    this.setState({ sendAttemptInProgress: true })
 
     // Prepare images for sending
     const frontImageUri = await takeSnapshotAsync(postcardFrontView)
@@ -48,8 +53,6 @@ class SendModal extends React.Component {
 
     // Post details to email send API route
     try {
-      this.setState({ sendAttempted: true })
-
       await axios.post('http://c092f327.ngrok.io/api/email', {
         recipient,
         frontImageFirebaseUrl,
@@ -60,17 +63,24 @@ class SendModal extends React.Component {
     } catch (err) {
       this.setState({ sendFailed: true })
     }
+
+    this.setState({ sendAttemptInProgress: false })
+  }
+
+  handleClose = () => {
+    this.props.toggleSendModalVisible()
+    this.setState(initialSendModalState)
   }
 
   render() {
     const {
       sendAttempted,
+      sendAttemptInProgress,
       sendSucceeded,
       sendFailed,
     } = this.state
     const {
       sendModalVisible,
-      toggleSendModalVisible,
     } = this.props
 
     return (
@@ -82,44 +92,54 @@ class SendModal extends React.Component {
       >
         <View style={styles.container}>
           <View style={styles.modal}>
-            <View style={styles.content}>
-              {sendAttempted ? (
-                <View>
-                  {sendSucceeded &&
-                    <Text>Your Stationery has been sent!</Text>
-                  }
-                  {sendFailed &&
-                    <Text>There was an issue sending your postcard.</Text>
-                  }
+            {sendAttemptInProgress ? (
+              <View>
+                <Text>Sending your Stationery...</Text>
+              </View>
+            ) : (
+              <React.Fragment>
+                <View style={styles.content}>
+                  {sendAttempted ? (
+                    <View style={styles.sendStatus}>
+                      {sendSucceeded &&
+                        <Text>Your Stationery has been sent!</Text>
+                      }
+                      {sendFailed &&
+                        <Text>There was an issue sending your postcard.</Text>
+                      }
+                    </View>
+                  ) : (
+                    <React.Fragment>
+                      <Text>Send to:</Text>
+                      <TextInput
+                        value={this.state.recipient}
+                        onChangeText={(recipient) => this.setState({ recipient })}
+                        placeholder={'Enter recipient\'s email'}
+                        placeholderTextColor='#90ABAB'
+                        autoCompleteType='email'
+                        keyboardType='email-address'
+                        style={styles.input}
+                      />
+                      <TouchableOpacity
+                        onPress={this.handleSend}
+                      >
+                        <Text>Send</Text>
+                      </TouchableOpacity>
+                    </React.Fragment>
+                  )}
                 </View>
-              ) : (
-                <React.Fragment>
-                  <Text>Send to:</Text>
-                  <TextInput
-                    value={this.state.recipient}
-                    onChangeText={(recipient) => this.setState({ recipient })}
-                    placeholder={'Enter recipient\'s email'}
-                    placeholderTextColor='#90ABAB'
-                    autoCompleteType='email'
-                    keyboardType='email-address'
-                    style={styles.input}
-                  />
+                <View style={styles.closeButtonContainer}>
                   <TouchableOpacity
-                    onPress={this.handleSend}
+                    onPress={this.handleClose}
                   >
-                    <Text>Send</Text>
+                    <View style={styles.closeButton}>
+                      <Text style={{ color: '#FFFFFF', fontWeight: 'bold'}}>Close</Text>
+                    </View>
                   </TouchableOpacity>
-                </React.Fragment>
-              )}
-            </View>
-            <View style={styles.closeButtonContainer}>
-              <TouchableOpacity
-                onPress={toggleSendModalVisible}>
-                  <View style={styles.closeButton}>
-                    <Text>Close</Text>
-                  </View>
-              </TouchableOpacity>
-            </View>
+                </View>
+              </React.Fragment>
+
+            )}
           </View>
         </View>
       </Modal>
@@ -174,13 +194,18 @@ const styles = StyleSheet.create({
   content: {
     flex: 3,
     padding: 10,
+    height: '100%',
     width: '100%',
+  },
+  sendStatus: {
+    display: 'flex',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   closeButtonContainer: {
     flex: 1.25,
     width: '100%',
-    borderTopColor: '#90ABAB',
-    borderTopWidth: 2,
   },
   closeButton: {
     display: 'flex',
@@ -188,6 +213,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     width: '100%',
+    backgroundColor: '#51ADAD',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
   }
