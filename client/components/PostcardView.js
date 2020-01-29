@@ -7,6 +7,7 @@ import { setImagePostcardFront } from '../store/imagePostcardFront'
 import { setImagePostcardBack } from '../store/imagePostcardBack'
 import { removeImagePostcardFront } from '../store/imagePostcardFront'
 import { removeImagePostcardBack } from '../store/imagePostcardBack'
+import { toggleSendModalVisible } from '../store/sendModalVisible'
 import { StyleSheet, View, CameraRoll, ImagePickerIOS } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -14,6 +15,7 @@ import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import CardFlip from 'react-native-card-flip'
 import PostcardFront from './PostcardFront'
 import PostcardBack from './PostcardBack'
+import SendModal from './SendModal'
 import axios from 'axios'
 // import * as MailComposer from 'expo-mail-composer'
 import * as firebase from 'firebase'
@@ -79,12 +81,22 @@ class PostcardView extends React.Component {
   }
 
   render() {
-    const { currentSide, imageData, isWriting, setSide, removeImage, removeImageFront, removeImageBack, toggleWriting } = this.props
+    const {
+      currentSide,
+      imageData,
+      isWriting,
+      setSide,
+      removeImage,
+      removeImageFront,
+      removeImageBack,
+      toggleWriting,
+      toggleSendModalVisible,
+    } = this.props
 
     return (
       <View style={styles.root}>
+        <SendModal />
         {imageData.imageUri &&
-
           <View style={styles.controls}>
             <React.Fragment>
               <TouchableOpacity onPress={() => {
@@ -118,9 +130,10 @@ class PostcardView extends React.Component {
               }}>
                 <Ionicons name="ios-trash" size={35} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={async () => {
-                const recipient = 'beautyinfallingleaves@gmail.com'
-                this.handleSend(recipient)
+              <TouchableOpacity onPress={() => {
+                // const recipient = 'beautyinfallingleaves@gmail.com'
+                // this.handleSend(recipient)
+                toggleSendModalVisible()
               }}>
                 <Ionicons name="md-paper-plane" size={35} />
               </TouchableOpacity>
@@ -145,6 +158,7 @@ const mapState = state => {
     postcardBackView: state.postcardBackView,
     imagePostcardFront: state.imagePostcardFront,
     imagePostcardBack: state.imagePostcardBack,
+    sendModalVisible: state.sendModalVisible,
   }
 }
 
@@ -157,6 +171,7 @@ const mapDispatch = dispatch => {
     toggleWriting: () => dispatch(toggleIsWriting()),
     setImageFront: (imageUri) => dispatch(setImagePostcardFront(imageUri)),
     setImageBack: (imageUri) => dispatch(setImagePostcardBack(imageUri)),
+    toggleSendModalVisible: () => dispatch(toggleSendModalVisible()),
   }
 }
 
