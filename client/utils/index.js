@@ -31,5 +31,3 @@ export const uploadImageToFirebaseStorage = async (uri) => {
   return await snapshot.ref.getDownloadURL();
 }
 
-// ***************************************
-//

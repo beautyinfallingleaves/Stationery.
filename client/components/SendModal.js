@@ -12,6 +12,7 @@ import {
   TextInput,
   TouchableOpacity
 } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import { uploadImageToFirebaseStorage } from '../utils'
 
@@ -109,8 +110,7 @@ class SendModal extends React.Component {
                       }
                     </View>
                   ) : (
-                    <React.Fragment>
-                      <Text>Send to:</Text>
+                    <View style={styles.sendControls}>
                       <TextInput
                         value={this.state.recipient}
                         onChangeText={(recipient) => this.setState({ recipient })}
@@ -123,9 +123,9 @@ class SendModal extends React.Component {
                       <TouchableOpacity
                         onPress={this.handleSend}
                       >
-                        <Text>Send</Text>
+                        <Ionicons name="md-paper-plane" size={35} />
                       </TouchableOpacity>
-                    </React.Fragment>
+                    </View>
                   )}
                 </View>
                 <View style={styles.closeButtonContainer}>
@@ -176,15 +176,17 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     position: 'absolute',
     left: '25%',
-    top: '25%',
-    height: '50%',
+    top: '35%',
+    height: '30%',
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    shadowOpacity: 0.75,
+    shadowOffset: { width: 2, height: 2 },
   },
   input: {
-    width: 200,
+    width: 250,
     height: 44,
     padding: 10,
     borderWidth: 1,
@@ -192,10 +194,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   content: {
-    flex: 3,
-    padding: 10,
+    flex: 1.5,
+    padding: 13,
     height: '100%',
     width: '100%',
+  },
+  sendControls: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
   sendStatus: {
     display: 'flex',
@@ -204,7 +212,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeButtonContainer: {
-    flex: 1.25,
+    flex: 1,
     width: '100%',
   },
   closeButton: {
