@@ -1,9 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { toggleSendModalVisible } from '../store/sendModalVisible'
-import { StyleSheet, Modal, View, Text, TouchableHighlight } from 'react-native'
+import { StyleSheet, Modal, View, Text, TextInput, TouchableOpacity } from 'react-native'
 
 class SendModal extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      recipient: '',
+    }
+  }
 
   render() {
     const { sendModalVisible, toggleSendModalVisible } = this.props
@@ -18,15 +25,30 @@ class SendModal extends React.Component {
         <View style={styles.container}>
           <View style={styles.modal}>
             <View style={styles.content}>
-              <Text>This will be where you select a recipient and Send or Cancel!</Text>
+              <Text>Send to:</Text>
+              <TextInput
+                value={this.state.recipient}
+                onChangeText={(recipient) => this.setState({ recipient })}
+                placeholder={'Recipient Email'}
+                style={styles.input}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('Going to send to ' + this.state.recipient)
+                }}
+              >
+                <Text>Send</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.buttons}>
-              <TouchableHighlight
+            <View style={styles.closeButtonContainer}>
+              <TouchableOpacity
                 onPress={() => {
                   toggleSendModalVisible()
                 }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
+                  <View style={styles.closeButton}>
+                    <Text>Close</Text>
+                  </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -56,7 +78,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modal: {
-    borderRadius: 20,
+    display: 'flex',
+    borderRadius: 15,
     position: 'absolute',
     left: '25%',
     top: '25%',
@@ -66,14 +89,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
+  input: {
+    width: 200,
+    height: 44,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    marginBottom: 10,
+  },
   content: {
     flex: 3,
     padding: 10,
+    width: '100%',
   },
-  buttons: {
-    flex: 1.5,
+  closeButtonContainer: {
+    flex: 1.25,
     width: '100%',
     borderTopColor: '#90ABAB',
-    borderTopWidth: 3,
+    borderTopWidth: 2,
+  },
+  closeButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   }
 });
