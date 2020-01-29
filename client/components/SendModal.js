@@ -10,22 +10,24 @@ class SendModal extends React.Component {
 
     return (
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={sendModalVisible}
         supportedOrientations={['landscape-left']}
       >
-        <View style={styles.root}>
-          <View style={styles.content}>
-            <Text>This will be where you select a recipient and Send or Cancel!</Text>
-          </View>
-          <View style={styles.buttons}>
-            <TouchableHighlight
-              onPress={() => {
-                toggleSendModalVisible()
-              }}>
-              <Text>Hide Modal</Text>
-            </TouchableHighlight>
+        <View style={styles.container}>
+          <View style={styles.modal}>
+            <View style={styles.content}>
+              <Text>This will be where you select a recipient and Send or Cancel!</Text>
+            </View>
+            <View style={styles.buttons}>
+              <TouchableHighlight
+                onPress={() => {
+                  toggleSendModalVisible()
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
           </View>
         </View>
       </Modal>
@@ -48,13 +50,20 @@ const mapDispatch = dispatch => {
 export default connect(mapState, mapDispatch)(SendModal)
 
 const styles = StyleSheet.create({
-  root: {
+  container: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modal: {
     borderRadius: 20,
     position: 'absolute',
     left: '25%',
     top: '25%',
     height: '50%',
     width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
   },
   content: {
@@ -62,8 +71,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttons: {
-    flex: 1,
-    borderTopColor: 'grey',
-    borderTopWidth: 1,
+    flex: 1.5,
+    width: '100%',
+    borderTopColor: '#90ABAB',
+    borderTopWidth: 3,
   }
 });

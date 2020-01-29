@@ -147,8 +147,8 @@ class PostcardView extends React.Component {
                 <Ionicons name="ios-trash" size={35} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
-                const recipient = 'beautyinfallingleaves@gmail.com'
-                this.handleSend(recipient)
+                // const recipient = 'beautyinfallingleaves@gmail.com'
+                // this.handleSend(recipient)
                 toggleSendModalVisible()
               }}>
                 <Ionicons name="md-paper-plane" size={35} />
