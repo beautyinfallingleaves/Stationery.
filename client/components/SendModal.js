@@ -1,7 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { toggleSendModalVisible } from '../store/sendModalVisible'
-import { StyleSheet, Modal, View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { setImagePostcardFront } from '../store/imagePostcardFront'
+import { setImagePostcardBack } from '../store/imagePostcardBack'
+import {
+  StyleSheet,
+  Modal,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity
+} from 'react-native'
+import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
+import { uploadImageToFirebaseStorage } from '../utils'
 
 class SendModal extends React.Component {
   constructor(props) {
@@ -10,10 +22,46 @@ class SendModal extends React.Component {
     this.state = {
       recipient: '',
     }
+
+    // this.handleSend = this.handleSend.bind(this)
+  }
+
+  handleSend = async () => {
+    const { recipient } = this.state
+    const {
+      postcardFrontView,
+      postcardBackView,
+      setImagePostcardFront,
+      setImagePostcardBack,
+    } = this.props
+    console.log('Sending to ' + recipient)
+
+    // Prepare images for sending
+    const frontImageUri = await takeSnapshotAsync(postcardFrontView)
+    const frontImageFirebaseUrl = await uploadImageToFirebaseStorage(frontImageUri)
+    setImagePostcardFront(frontImageFirebaseUrl)
+
+    const backImageUri = await takeSnapshotAsync(postcardBackView)
+    const backImageFirebaseUrl = await uploadImageToFirebaseStorage(backImageUri)
+    setImagePostcardBack(backImageFirebaseUrl)
+
+    // Post details to email send API route
+    try {
+      await axios.post('http://c092f327.ngrok.io/api/email', {
+        recipient,
+        frontImageFirebaseUrl,
+        backImageFirebaseUrl,
+      })
+    } catch (err) {
+      console.error('There was an issue sending your postcard.')
+    }
   }
 
   render() {
-    const { sendModalVisible, toggleSendModalVisible } = this.props
+    const {
+      sendModalVisible,
+      toggleSendModalVisible,
+    } = this.props
 
     return (
       <Modal
@@ -33,9 +81,7 @@ class SendModal extends React.Component {
                 style={styles.input}
               />
               <TouchableOpacity
-                onPress={() => {
-                  console.log('Going to send to ' + this.state.recipient)
-                }}
+                onPress={this.handleSend}
               >
                 <Text>Send</Text>
               </TouchableOpacity>
@@ -59,13 +105,19 @@ class SendModal extends React.Component {
 
 const mapState = state => {
   return {
-    sendModalVisible: state.sendModalVisible
+    sendModalVisible: state.sendModalVisible,
+    postcardFrontView: state.postcardFrontView,
+    postcardBackView: state.postcardBackView,
+    imagePostcardFront: state.imagePostcardFront,
+    imagePostcardBack: state.imagePostcardBack,
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    toggleSendModalVisible: () => dispatch(toggleSendModalVisible())
+    toggleSendModalVisible: () => dispatch(toggleSendModalVisible()),
+    setImagePostcardFront: (imageUri) => dispatch(setImagePostcardFront(imageUri)),
+    setImagePostcardBack: (imageUri) => dispatch(setImagePostcardBack(imageUri)),
   }
 }
 
