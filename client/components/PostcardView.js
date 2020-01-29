@@ -83,8 +83,9 @@ class PostcardView extends React.Component {
 
     return (
       <View style={styles.root}>
-        <View style={styles.controls}>
-          {imageData.imageUri &&
+        {imageData.imageUri &&
+
+          <View style={styles.controls}>
             <React.Fragment>
               <TouchableOpacity onPress={() => {
                 currentSide === 'front' ? setSide('back') : setSide('front')
@@ -124,8 +125,8 @@ class PostcardView extends React.Component {
                 <Ionicons name="md-paper-plane" size={35} />
               </TouchableOpacity>
             </React.Fragment>
-          }
-        </View>
+          </View>
+        }
         <CardFlip style={styles.flipCard} flipZoom={0.5} ref={(card) => this.card = card} >
           <PostcardFront />
           <PostcardBack />
