@@ -96,60 +96,70 @@ class PostcardView extends React.Component {
 
     return (
       <View style={styles.root}>
-        {/* <LinearGradient
-          colors={['#4c669f', '#3b5998', '#192f6a']}
-        > */}
+        <LinearGradient
+          colors={['#0FAD98', '#ACF5F5']}
+          start={[0.3, 1]}
+          end={[0.9, 0]}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: '100%',
+            width: '100%',
+          }}
+        />
 
-          <SendModal />
-          {imageData.imageUri &&
-            <View style={styles.controls}>
-              <React.Fragment>
-                <TouchableOpacity onPress={() => {
-                  currentSide === 'front' ? setSide('back') : setSide('front')
-                  this.card.flip()
-                }}>
-                  <Ionicons name="ios-swap" size={35} />
-                </TouchableOpacity>
-                {currentSide === 'back' ? (
-                  <TouchableOpacity>
-                    <Ionicons name="ios-map" size={35} />
-                  </TouchableOpacity>
-                ) : (
-                  <React.Fragment />
-                )}
-                <TouchableOpacity onPress={() => toggleWriting()}>
-                  <Ionicons name={isWriting ? ("md-save") : ("md-brush")} size={35} />
-                </TouchableOpacity>
+        <SendModal />
+
+        {imageData.imageUri &&
+          <View style={styles.controls}>
+            <React.Fragment>
+              <TouchableOpacity onPress={() => {
+                currentSide === 'front' ? setSide('back') : setSide('front')
+                this.card.flip()
+              }}>
+                <Ionicons name="ios-swap" size={35} />
+              </TouchableOpacity>
+              {currentSide === 'back' ? (
                 <TouchableOpacity>
-                  <Ionicons name="ios-color-palette" size={35} />
+                  <Ionicons name="ios-map" size={35} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                    removeImage()
-                    removeImageFront()
-                    removeImageBack()
-                    if (isWriting) toggleWriting()
-                    if (currentSide === 'back') {
-                      setSide('front')
-                      this.card.flip()
-                    }
-                }}>
-                  <Ionicons name="ios-trash" size={35} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {
-                  const recipient = 'beautyinfallingleaves@gmail.com'
-                  this.handleSend(recipient)
-                  toggleSendModalVisible()
-                }}>
-                  <Ionicons name="md-paper-plane" size={35} />
-                </TouchableOpacity>
-              </React.Fragment>
-            </View>
-          }
-          <CardFlip style={styles.flipCard} flipZoom={0.5} ref={(card) => this.card = card} >
-            <PostcardFront />
-            <PostcardBack />
-          </CardFlip>
-        {/* </LinearGradient> */}
+              ) : (
+                <React.Fragment />
+              )}
+              <TouchableOpacity onPress={() => toggleWriting()}>
+                <Ionicons name={isWriting ? ("md-save") : ("md-brush")} size={35} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Ionicons name="ios-color-palette" size={35} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                  removeImage()
+                  removeImageFront()
+                  removeImageBack()
+                  if (isWriting) toggleWriting()
+                  if (currentSide === 'back') {
+                    setSide('front')
+                    this.card.flip()
+                  }
+              }}>
+                <Ionicons name="ios-trash" size={35} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                const recipient = 'beautyinfallingleaves@gmail.com'
+                this.handleSend(recipient)
+                toggleSendModalVisible()
+              }}>
+                <Ionicons name="md-paper-plane" size={35} />
+              </TouchableOpacity>
+            </React.Fragment>
+          </View>
+        }
+        <CardFlip style={styles.flipCard} flipZoom={0.5} ref={(card) => this.card = card} >
+          <PostcardFront />
+          <PostcardBack />
+        </CardFlip>
       </View>
     )
   }
@@ -189,7 +199,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: '100%',
     width: '100%',
-    backgroundColor: '#3FBFBF',
   },
   flipCard: {
     flex: 1,
