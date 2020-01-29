@@ -19,8 +19,6 @@ const reducer = combineReducers({
   sendModalVisible,
 })
 
-console.log('combined reducer:', reducer)
-
 const store = createStore(reducer)
 
 export default store
