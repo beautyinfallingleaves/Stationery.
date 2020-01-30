@@ -7,6 +7,7 @@ import isWriting from './isWriting'
 import postcardFrontView from './postcardFrontView'
 import postcardBackView from './postcardBackView'
 import sendModalVisible from './sendModalVisible'
+import mapVisible from './mapVisible'
 
 const reducer = combineReducers({
   currentSide,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   postcardFrontView,
   postcardBackView,
   sendModalVisible,
+  mapVisible,
 })
 
 const store = createStore(reducer)

@@ -12,7 +12,11 @@ class PostcardBack extends React.Component {
   }
 
   render() {
-    const { imageData, isWriting } = this.props
+    const {
+      imageData,
+      isWriting,
+      mapVisible,
+    } = this.props
     const latitude = imageData.latitude || 41.89555
     const longitude = imageData.longitude || -87.638925
 
@@ -23,21 +27,23 @@ class PostcardBack extends React.Component {
         ref={view => (this.postcardBack = view)}
       >
         <View style={styles.mapArea}>
-          <MapView
-            style={styles.mapStyle}
-            scrollEnabled={true}
-            initialRegion={{
-              latitude,
-              longitude,
-              latitudeDelta: 0.5,
-              longitudeDelta: 0.5,
-            }}
-          >
-            <Marker
-              coordinate={{latitude,
-                longitude}}
-            />
-          </MapView>
+          {mapVisible &&
+            <MapView
+              style={styles.mapStyle}
+              scrollEnabled={true}
+              initialRegion={{
+                latitude,
+                longitude,
+                latitudeDelta: 0.5,
+                longitudeDelta: 0.5,
+              }}
+            >
+              <Marker
+                coordinate={{latitude,
+                  longitude}}
+              />
+            </MapView>
+          }
         </View>
         <View style={styles.textArea}>
           <Image source={require('../../assets/post_stamp.png')} style={{width: 150, height: 150, alignSelf: 'flex-end'}} />
@@ -66,6 +72,7 @@ const mapState = state => {
   return {
     isWriting: state.isWriting,
     imageData: state.imageData,
+    mapVisible: state.mapVisible,
   }
 }
 

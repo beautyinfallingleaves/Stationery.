@@ -6,15 +6,19 @@ import { toggleIsWriting } from '../store/isWriting'
 import { removeImagePostcardFront } from '../store/imagePostcardFront'
 import { removeImagePostcardBack } from '../store/imagePostcardBack'
 import { toggleSendModalVisible } from '../store/sendModalVisible'
+import { toggleMapVisible } from '../store/mapVisible'
 import { StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
-import { Ionicons } from '@expo/vector-icons'
+import {
+  Ionicons,
+  FontAwesome,
+  MaterialIcons,
+} from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import CardFlip from 'react-native-card-flip'
 import PostcardFront from './PostcardFront'
 import PostcardBack from './PostcardBack'
 import SendModal from './SendModal'
-// import * as MailComposer from 'expo-mail-composer'
 
 class PostcardView extends React.Component {
   render() {
@@ -28,6 +32,8 @@ class PostcardView extends React.Component {
       removeImageBack,
       toggleWriting,
       toggleSendModalVisible,
+      mapVisible,
+      toggleMapVisible,
     } = this.props
 
     return (
@@ -55,22 +61,30 @@ class PostcardView extends React.Component {
                 currentSide === 'front' ? setSide('back') : setSide('front')
                 this.card.flip()
               }}>
-                <Ionicons name="ios-swap" size={35} />
+                <Ionicons name='ios-swap' size={35} />
               </TouchableOpacity>
               {currentSide === 'back' ? (
-                <TouchableOpacity>
-                  <Ionicons name="ios-map" size={35} />
+                <TouchableOpacity onPress={toggleMapVisible}>
+                  <FontAwesome
+                    name={mapVisible ? ('map-o') : ('map')}
+                    size={27}
+                  />
                 </TouchableOpacity>
               ) : (
                 <React.Fragment />
               )}
-              <TouchableOpacity onPress={() => toggleWriting()}>
-                <Ionicons name={isWriting ? ("md-save") : ("md-brush")} size={35} />
+              <TouchableOpacity onPress={toggleWriting}>
+                {isWriting ? (
+                  <MaterialIcons name='layers-clear' size={39} />
+                ) : (
+                  <Ionicons name='md-brush' size={35} />
+                )}
               </TouchableOpacity>
               <TouchableOpacity>
-                <Ionicons name="ios-color-palette" size={35} />
+                <Ionicons name='ios-color-palette' size={35} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => {
+                  if (!mapVisible) toggleMapVisible()
                   removeImage()
                   removeImageFront()
                   removeImageBack()
@@ -80,10 +94,10 @@ class PostcardView extends React.Component {
                     this.card.flip()
                   }
               }}>
-                <Ionicons name="ios-trash" size={35} />
+                <Ionicons name='ios-trash' size={35} />
               </TouchableOpacity>
               <TouchableOpacity onPress={toggleSendModalVisible}>
-                <Ionicons name="md-paper-plane" size={35} />
+                <Ionicons name='md-paper-plane' size={35} />
               </TouchableOpacity>
             </React.Fragment>
           </View>
@@ -103,6 +117,7 @@ const mapState = state => {
     imageData: state.imageData,
     isWriting: state.isWriting,
     sendModalVisible: state.sendModalVisible,
+    mapVisible: state.mapVisible,
   }
 }
 
@@ -114,6 +129,7 @@ const mapDispatch = dispatch => {
     removeImageBack: () => dispatch(removeImagePostcardBack()),
     toggleWriting: () => dispatch(toggleIsWriting()),
     toggleSendModalVisible: () => dispatch(toggleSendModalVisible()),
+    toggleMapVisible: () => dispatch(toggleMapVisible())
   }
 }
 

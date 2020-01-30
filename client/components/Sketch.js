@@ -1,12 +1,15 @@
 import * as ExpoPixi from 'expo-pixi';
 import React, { Component } from 'react';
-import { Platform, AppState, StyleSheet, View } from 'react-native';
-import { Button, Text } from 'native-base'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  Platform,
+  AppState,
+  StyleSheet,
+  View
+} from 'react-native'
+import { Avatar } from 'react-native-elements'
 
 const isAndroid = Platform.OS === 'android';
 function uuidv4() {
-  //https://stackoverflow.com/a/2117523/4047926
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = (Math.random() * 16) | 0,
       v = c == 'x' ? r : (r & 0x3) | 0x8;
@@ -64,14 +67,28 @@ export default class Sketch extends Component {
           onChange={this.onChangeAsync}
           onReady={this.onReady}
         />
-        <TouchableOpacity
-          style={styles.undoDraw}
-          onPress={() => {
-            this.sketch.undo()
-          }}
-        >
-          <Button small bordered danger><Text>Undo Draw</Text></Button>
-        </TouchableOpacity>
+        {this.state.image &&
+          <Avatar
+            onPress={() => {this.sketch.undo()}}
+            rounded
+            icon={{
+              name: 'undo',
+              color: 'black',
+              type: 'font-awesome'
+            }}
+            overlayContainerStyle={{
+              backgroundColor: 'white',
+            }}
+            containerStyle={{
+              position: 'absolute',
+              top: 20,
+              left: 20,
+              borderColor: 'black',
+              shadowOpacity: 0.5,
+              shadowOffset: { width: 1, height: 1 },
+            }}
+          />
+        }
       </View>
     )
   }
