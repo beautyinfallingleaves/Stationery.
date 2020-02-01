@@ -15,6 +15,7 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import { uploadImageToFirebaseStorage } from '../utils'
+import { ngrokServerUrl } from '../../constants/ApiConfig'
 
 const initialSendModalState = {
   recipient: '',
@@ -54,7 +55,7 @@ class SendModal extends React.Component {
 
     // Post details to email send API route
     try {
-      await axios.post('http://c092f327.ngrok.io/api/email', {
+      await axios.post(`${ngrokServerUrl}/api/email`, {
         recipient,
         frontImageFirebaseUrl,
         backImageFirebaseUrl,

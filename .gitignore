@@ -11,6 +11,7 @@ web-build/
 web-report/
 secrets.js
 constants/ApiConfig.js
+.env
 
 # macOS
 .DS_Store
