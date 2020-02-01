@@ -1,10 +1,10 @@
 import React from 'react';
 import { ScreenOrientation } from 'expo'
 import { StatusBar } from 'react-native'
-import { PostcardView } from './client/components'
 import { Provider } from 'react-redux'
-import store from './client/store'
-import { firebaseConfig } from './constants/ApiConfig'
+import store from './store'
+import { PostcardView } from './components'
+import { firebaseConfig } from '../constants/ApiConfig'
 import * as firebase from 'firebase'
 
 class App extends React.Component {
@@ -12,9 +12,7 @@ class App extends React.Component {
     super()
 
     //initialize firebase
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig)
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig)
   }
 
   componentDidMount() {
