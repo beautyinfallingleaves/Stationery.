@@ -46,7 +46,10 @@ class PostcardBack extends React.Component {
           }
         </View>
         <View style={styles.textArea}>
-          <Image source={require('../../assets/post_stamp.png')} style={{width: 150, height: 150, alignSelf: 'flex-end'}} />
+          <Image
+            source={require('../../assets/post_stamp.png')}
+            style={styles.stamp}
+          />
           <View style={styles.textAreaDividerArea}>
             <Text>{'\n'}</Text>
             <Divider style={styles.divider} />
@@ -97,6 +100,11 @@ const styles = StyleSheet.create({
     padding: 5,
     shadowOpacity: 0.75,
     shadowOffset: { width: 2, height: 2 },
+  },
+  stamp: {
+    width: 150,
+    height: 150,
+    alignSelf: 'flex-end'
   },
   textArea: {
     flex: 1,
