@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
+import * as Permissions from 'expo-permissions';
 
 export default function TakePhoto() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -8,7 +9,7 @@ export default function TakePhoto() {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
       setHasPermission(status === 'granted');
     })();
   }, []);

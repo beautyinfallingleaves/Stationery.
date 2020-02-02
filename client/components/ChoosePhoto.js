@@ -48,31 +48,19 @@ class ChoosePhoto extends React.Component {
   }
 
   render() {
-    const { imageUri } = this.props.imageData
-
     return (
         <View style={styles.container}>
-          {!imageUri ? (
-            <View style={styles.content}>
-              <Text style={{fontSize: 64, fontFamily: 'American Typewriter'}}>Stationery.</Text>
-              <TouchableOpacity onPress={this._pickImage}>
-                <Ionicons name="md-images" size={75} />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <Image
-              source={{ uri: imageUri }}
-              style={{ width: '100%', height: '100%' }}
-            />
-          )}
+          <Text
+            style={{fontSize: 64,
+            fontFamily: 'American Typewriter'
+          }}>
+            Stationery.
+          </Text>
+          <TouchableOpacity onPress={this._pickImage}>
+            <Ionicons name="md-images" size={75} />
+          </TouchableOpacity>
         </View>
     );
-  }
-}
-
-const mapState = state => {
-  return {
-    imageData: state.imageData,
   }
 }
 
@@ -82,7 +70,7 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(ChoosePhoto)
+export default connect(null, mapDispatch)(ChoosePhoto)
 
 const styles = StyleSheet.create({
   container: {

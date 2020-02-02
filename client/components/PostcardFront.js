@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { setPostcardFrontView } from '../store/postcardFrontView'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Image, Text } from 'react-native'
 import Sketch from './Sketch'
 import ChoosePhoto from './ChoosePhoto'
 
@@ -11,7 +11,8 @@ class PostcardFront extends React.Component {
   }
 
   render() {
-    const { isWriting } = this.props
+    const { imageData, isWriting } = this.props
+    const { imageUri } = imageData
 
     return (
       <View
@@ -19,10 +20,16 @@ class PostcardFront extends React.Component {
         collapsable={false}
         ref={view => (this.postcardFront = view)}
       >
-        <ChoosePhoto />
+        {imageUri ? (
+          <Image
+            source={{ uri: imageUri }}
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : (
+          <ChoosePhoto />
+        )}
         {isWriting &&
-          <Sketch />
-        }
+          <Sketch />}
       </View>
     )
   }
@@ -46,6 +53,7 @@ const styles = StyleSheet.create({
 
 const mapState = state => {
   return {
+    imageData: state.imageData,
     isWriting: state.isWriting,
   }
 }
