@@ -15,7 +15,7 @@ export default function TakePhoto() {
   }, []);
 
   if (hasPermission === null) {
-    return <View />;
+    return <Text>Waiting for permission to access camera</Text>;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;

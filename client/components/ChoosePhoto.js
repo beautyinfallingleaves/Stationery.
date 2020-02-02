@@ -1,12 +1,14 @@
 import * as React from 'react';
 import {connect} from 'react-redux'
 import {setImageData} from '../store/imageData'
-import { StyleSheet, Image, View, Text } from 'react-native';
+import {toggleTakingPhoto} from '../store/takingPhoto'
+import { StyleSheet, View, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, Entypo } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import TakePhoto from './TakePhoto'
 
 class ChoosePhoto extends React.Component {
   componentDidMount() {
@@ -48,29 +50,47 @@ class ChoosePhoto extends React.Component {
   }
 
   render() {
+    const { takingPhoto, toggleTakingPhoto } = this.props
+
     return (
-        <View style={styles.container}>
-          <Text
-            style={{fontSize: 64,
-            fontFamily: 'American Typewriter'
-          }}>
-            Stationery.
-          </Text>
-          <TouchableOpacity onPress={this._pickImage}>
-            <Ionicons name="md-images" size={75} />
-          </TouchableOpacity>
-        </View>
-    );
+      <React.Fragment>
+        {takingPhoto ? (
+          <TakePhoto />
+        ) : (
+          <View style={styles.container}>
+            <Text
+              style={{fontSize: 64,
+              fontFamily: 'American Typewriter'
+            }}>
+              Stationery.
+            </Text>
+            <TouchableOpacity onPress={this._pickImage}>
+              <Ionicons name="md-images" size={75} />
+            </TouchableOpacity>
+            {/* <TouchableOpacity onPress={toggleTakingPhoto}>
+              <Entypo name="camera" size={65} />
+            </TouchableOpacity> */}
+          </View>
+        )}
+      </React.Fragment>
+    )
+  }
+}
+
+const mapState = state => {
+  return {
+    takingPhoto: state.takingPhoto,
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    setImage: (imageData) => dispatch(setImageData(imageData))
+    toggleTakingPhoto: () => dispatch(toggleTakingPhoto()),
+    setImage: (imageData) => dispatch(setImageData(imageData)),
   }
 }
 
-export default connect(null, mapDispatch)(ChoosePhoto)
+export default connect(mapState, mapDispatch)(ChoosePhoto)
 
 const styles = StyleSheet.create({
   container: {

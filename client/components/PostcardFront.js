@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { setPostcardFrontView } from '../store/postcardFrontView'
-import { StyleSheet, View, Image, Text } from 'react-native'
+import { StyleSheet, View, Image } from 'react-native'
 import Sketch from './Sketch'
 import ChoosePhoto from './ChoosePhoto'
+import TakePhoto from './TakePhoto'
 
 class PostcardFront extends React.Component {
   componentDidMount() {

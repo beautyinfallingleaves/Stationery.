@@ -8,6 +8,7 @@ import postcardFrontView from './postcardFrontView'
 import postcardBackView from './postcardBackView'
 import sendModalVisible from './sendModalVisible'
 import mapVisible from './mapVisible'
+import takingPhoto from './takingPhoto'
 
 const reducer = combineReducers({
   currentSide,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   postcardBackView,
   sendModalVisible,
   mapVisible,
+  takingPhoto,
 })
 
 const store = createStore(reducer)
