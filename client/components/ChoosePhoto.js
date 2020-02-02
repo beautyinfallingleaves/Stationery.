@@ -9,6 +9,7 @@ import * as Permissions from 'expo-permissions';
 import { Ionicons, Entypo } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TakePhoto from './TakePhoto'
+import { processPhotoData } from '../utils'
 
 class ChoosePhoto extends React.Component {
   componentDidMount() {
@@ -32,21 +33,7 @@ class ChoosePhoto extends React.Component {
       exif: true,
     });
 
-    if (!result.cancelled) {
-      const GPSLatitude = result.exif.GPSLatitude
-      const GPSLongitude = result.exif.GPSLongitude
-
-      const latitude = result.exif.GPSLatitudeRef === 'N' ?
-        GPSLatitude : -GPSLatitude
-      const longitude = result.exif.GPSLatitudeRef === 'E' ?
-        GPSLongitude : -GPSLongitude
-
-      this.props.setImage({
-        imageUri: result.uri,
-        latitude,
-        longitude,
-      })
-    }
+    if (!result.cancelled) processPhotoData(result)
   }
 
   render() {

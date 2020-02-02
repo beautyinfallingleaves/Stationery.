@@ -1,5 +1,26 @@
 import * as firebase from 'firebase'
 import uuid from 'uuid'
+import store from '../store'
+import { setImageData } from '../store/imageData'
+
+// ***************************************
+// Update redux imageData with supplied photo
+
+export const processPhotoData = (photo) => {
+  const GPSLatitude = photo.exif.GPSLatitude
+    const GPSLongitude = photo.exif.GPSLongitude
+
+    const latitude = photo.exif.GPSLatitudeRef === 'N' ?
+      GPSLatitude : -GPSLatitude
+    const longitude = photo.exif.GPSLatitudeRef === 'E' ?
+      GPSLongitude : -GPSLongitude
+
+    store.dispatch(setImageData({
+      imageUri: photo.uri,
+      latitude,
+      longitude,
+    }))
+}
 
 // ***************************************
 // Upload an image uri to Firebase Storage
