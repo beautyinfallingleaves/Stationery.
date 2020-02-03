@@ -1,6 +1,7 @@
 const router = require('express').Router()
 module.exports = router
 
+console.log('In generic router')
 router.use('/email', require('./email'))
 
 router.use((req, res, next) => {
