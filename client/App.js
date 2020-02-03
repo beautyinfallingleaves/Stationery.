@@ -11,7 +11,7 @@ class App extends React.Component {
   constructor() {
     super()
 
-    //initialize firebase
+    // initialize firebase
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig)
   }
 

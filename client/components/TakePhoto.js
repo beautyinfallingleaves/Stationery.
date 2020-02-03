@@ -4,6 +4,7 @@ import { toggleTakingPhoto } from '../store/takingPhoto'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location'
 import { processPhotoData } from '../utils'
 
 class TakePhoto extends React.Component {
@@ -11,20 +12,24 @@ class TakePhoto extends React.Component {
     super(props)
 
     this.state = {
-      hasPermission: null,
+      hasCameraPermission: null,
+      hasLocationPermission: null,
       type: Camera.Constants.Type.back,
+      location: null,
     }
   }
 
-  componentDidMount() {
-    const getPermissions = async () => {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA)
-      this.setState({
-        hasPermission: status === 'granted'
-      })
-    }
+  async componentDidMount() {
+    const cameraResult = await Permissions.askAsync(Permissions.CAMERA)
+    const cameraStatus = cameraResult.status
 
-    getPermissions()
+    const locationResult = await Permissions.askAsync(Permissions.LOCATION)
+    const locationStatus = locationResult.status
+
+    this.setState({
+      hasCameraPermission: cameraStatus === 'granted',
+      hasLocationPermission: locationStatus  === 'granted',
+    })
   }
 
   takePhoto = async () => {
@@ -40,11 +45,11 @@ class TakePhoto extends React.Component {
   }
 
   render() {
-    if (this.state.hasPermission === null) {
+    if (this.state.hasCameraPermission === null) {
       return <Text>Waiting for permission to access camera</Text>
     }
 
-    if (this.state.hasPermission === false) {
+    if (this.state.hasCameraPermission === false) {
       return <Text>No access to camera</Text>
     }
 
