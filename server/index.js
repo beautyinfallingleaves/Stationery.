@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8080
 const app = express()
 module.exports = app
 
+console.log('Port: ', PORT)
 // if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 
