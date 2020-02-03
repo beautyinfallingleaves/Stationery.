@@ -32,12 +32,6 @@ class PostcardBack extends React.Component {
             <MapView
               style={styles.mapStyle}
               scrollEnabled={true}
-              // initialRegion={{
-              //   latitude,
-              //   longitude,
-              //   latitudeDelta: 0.5,
-              //   longitudeDelta: 0.5,
-              // }}
               region={{
                 latitude,
                 longitude,
