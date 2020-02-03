@@ -6,8 +6,6 @@ module.exports = router
 router.post('/', async (req, res, next) => {
   const { recipient, frontImageFirebaseUrl, backImageFirebaseUrl } = req.body
 
-  console.log(`Preparing to SendGrid to ${recipient}`)
-
   try {
     const msg = {
       to: recipient,
