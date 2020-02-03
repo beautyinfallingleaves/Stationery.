@@ -2,8 +2,9 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "node server -e html,js,scss --ignore client",
+    "start-client": "expo start",
     "start-server": "nodemon server -e html,js,scss --ignore client",
-    "start-dev": "npm start & npm run start-server",
+    "start-dev": "npm run start-server & npm run start-client",
     "start-ngrok": "ngrok http 8080",
     "android": "expo start --android",
     "ios": "expo start --ios",
