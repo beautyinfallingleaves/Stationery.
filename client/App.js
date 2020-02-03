@@ -16,7 +16,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT)
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT)
   }
 
   render() {

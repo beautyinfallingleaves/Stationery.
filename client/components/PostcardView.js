@@ -57,14 +57,13 @@ export default connect(mapState)(PostcardView)
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'center',
     height: '100%',
     width: '100%',
   },
   flipCard: {
-    flex: 1,
+    width: '90%',
   },
-  icon: {
-    margin: 10,
-  }
 });

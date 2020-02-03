@@ -51,12 +51,14 @@ class ChoosePhoto extends React.Component {
             }}>
               Stationery.
             </Text>
-            <TouchableOpacity onPress={this._pickImage}>
-              <Ionicons name="md-images" size={75} />
-            </TouchableOpacity>
-            {/* <TouchableOpacity onPress={toggleTakingPhoto}>
-              <Entypo name="camera" size={65} />
-            </TouchableOpacity> */}
+            <View style={styles.takeOrChoosePhoto}>
+              <TouchableOpacity onPress={this._pickImage}>
+                <Ionicons name="md-images" size={75} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleTakingPhoto}>
+                <Entypo name="camera" size={65} />
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </React.Fragment>
@@ -89,6 +91,14 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  takeOrChoosePhoto: {
+    margin: 20,
+    width: 200,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   }
 });

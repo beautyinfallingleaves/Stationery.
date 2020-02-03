@@ -90,7 +90,7 @@ class SendModal extends React.Component {
         animationType='fade'
         transparent={true}
         visible={sendModalVisible}
-        supportedOrientations={['landscape-left']}
+        supportedOrientations={['landscape-right']}
       >
         <View style={styles.container}>
           <View style={styles.modal}>

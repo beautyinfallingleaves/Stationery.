@@ -108,7 +108,7 @@ export default connect(mapState, mapDispatch)(Controls)
 
 const styles = StyleSheet.create({
   root: {
-    width: 55,
+    width: '10%',
     backgroundColor: 'white',
     borderRightColor: '#264A3A',
     borderRightWidth: 1,
