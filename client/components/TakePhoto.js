@@ -26,9 +26,12 @@ class TakePhoto extends React.Component {
     const locationResult = await Permissions.askAsync(Permissions.LOCATION)
     const locationStatus = locationResult.status
 
+    const location = await Location.getCurrentPositionAsync({})
+
     this.setState({
       hasCameraPermission: cameraStatus === 'granted',
       hasLocationPermission: locationStatus  === 'granted',
+      location,
     })
   }
 
@@ -38,6 +41,12 @@ class TakePhoto extends React.Component {
         quality: 1,
         exif: true,
       })
+
+      // process location to add to photo
+      const { location } = this.state
+      const { latitude, longitude } = location.coords
+      photo.exif.GPSLatitude = latitude
+      photo.exif.GPSLongitude = longitude
 
       processPhotoData(photo)
       this.props.toggleTakingPhoto()

@@ -7,22 +7,23 @@ import { setImageData } from '../store/imageData'
 // Update redux imageData with supplied photo
 
 export const processPhotoData = (photo) => {
-  console.log(photo)
-  const GPSLatitude = photo.exif.GPSLatitude
-    const GPSLongitude = photo.exif.GPSLongitude
+  const {
+    GPSLatitude,
+    GPSLatitudeRef,
+    GPSLongitude,
+    GPSLongitudeRef,
+  } = photo.exif
 
-    const latitude = photo.exif.GPSLatitudeRef === 'N' ?
-      GPSLatitude : -GPSLatitude
-    const longitude = photo.exif.GPSLatitudeRef === 'E' ?
-      GPSLongitude : -GPSLongitude
+  const latitude = GPSLatitudeRef === 'S' ?
+    -GPSLatitude : GPSLatitude
+  const longitude = GPSLongitudeRef === 'W' ?
+    -GPSLongitude : GPSLongitude
 
-    console.log(latitude, longitude)
-
-    store.dispatch(setImageData({
-      imageUri: photo.uri,
-      latitude,
-      longitude,
-    }))
+  store.dispatch(setImageData({
+    imageUri: photo.uri,
+    latitude,
+    longitude,
+  }))
 }
 
 // ***************************************
