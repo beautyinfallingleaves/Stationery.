@@ -19,7 +19,6 @@ class PostcardBack extends React.Component {
     } = this.props
     const latitude = imageData.latitude || 41.89555
     const longitude = imageData.longitude || -87.638925
-    console.log('lat:', latitude, 'lon:', longitude)
 
     return (
       <View

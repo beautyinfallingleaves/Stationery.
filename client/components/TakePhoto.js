@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { toggleTakingPhoto } from '../store/takingPhoto'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View } from 'react-native'
+import { Avatar } from 'react-native-elements'
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
@@ -77,31 +78,51 @@ class TakePhoto extends React.Component {
               backgroundColor: 'transparent',
               flexDirection: 'row',
             }}>
-            <TouchableOpacity
-              style={{
-                flex: 0.1,
-                alignSelf: 'flex-end',
-                alignItems: 'center',
-              }}
+            <Avatar
               onPress={() => {
                 this.setState({
                   type: this.state.type === Camera.Constants.Type.back
                     ? Camera.Constants.Type.front
                     : Camera.Constants.Type.back
                 })
-              }}>
-              <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Flip </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                flex: 0.1,
-                alignSelf: 'flex-end',
-                alignItems: 'center',
               }}
+              rounded
+              size='medium'
+              icon={{
+                name: 'ios-reverse-camera',
+                color: 'black',
+                type: 'ionicon',
+                size: 35,
+              }}
+              overlayContainerStyle={{
+                backgroundColor: 'white',
+              }}
+              containerStyle={{
+                position: 'absolute',
+                bottom: 20,
+                left: 20,
+                borderColor: 'black',
+                shadowOpacity: 0.5,
+                shadowOffset: { width: 1, height: 1 },
+              }}
+            />
+            <Avatar
               onPress={this.takePhoto}
-            >
-              <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Snap </Text>
-            </TouchableOpacity>
+              rounded
+              size='medium'
+              overlayContainerStyle={{
+                backgroundColor: 'red',
+              }}
+              containerStyle={{
+                position: 'absolute',
+                bottom: 20,
+                right: 20,
+                borderColor: 'white',
+                borderWidth: 4,
+                shadowOpacity: 0.5,
+                shadowOffset: { width: 1, height: 1 },
+              }}
+            />
           </View>
         </Camera>
       </View>
