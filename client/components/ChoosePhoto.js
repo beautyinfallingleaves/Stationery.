@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {setImageData} from '../store/imageData'
 import {toggleTakingPhoto} from '../store/takingPhoto'
 import { StyleSheet, View, Text } from 'react-native';
+import * as Font from 'expo-font'
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -12,17 +13,27 @@ import TakePhoto from './TakePhoto'
 import { processPhotoData } from '../utils'
 
 class ChoosePhoto extends React.Component {
-  componentDidMount() {
-    this.getPermissionAsync()
-  }
+  constructor() {
+    super()
 
-  getPermissionAsync = async () => {
+    this.state = {
+      fontLoaded: false,
+    }
+  }
+  async componentDidMount() {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== 'granted') {
         alert('Sorry, we need camera roll permissions to make this work!');
       }
     }
+
+    // Load typewriter font
+    await Font.loadAsync({
+      'typewriter': require('../../assets/atwriter.ttf')
+    })
+
+    this.setState({ fontLoaded: true })
   }
 
   _pickImage = async () => {
@@ -45,12 +56,14 @@ class ChoosePhoto extends React.Component {
           <TakePhoto />
         ) : (
           <View style={styles.container}>
-            <Text
-              style={{fontSize: 64,
-              fontFamily: 'American Typewriter'
-            }}>
-              Stationery.
-            </Text>
+            {this.state.fontLoaded &&
+              <Text
+                style={{fontSize: 64,
+                fontFamily: 'typewriter'
+              }}>
+                Stationery.
+              </Text>
+            }
             <View style={styles.takeOrChoosePhoto}>
               <TouchableOpacity onPress={this._pickImage}>
                 <Ionicons name="md-images" size={75} />
@@ -94,8 +107,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   takeOrChoosePhoto: {
-    margin: 20,
-    width: 200,
+    marginTop: 40,
+    width: 230,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
