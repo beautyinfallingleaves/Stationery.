@@ -10,7 +10,7 @@ npm-debug.*
 web-build/
 web-report/
 secrets.js
-constants/ApiConfig.js
+constants/config.js
 .env
 
 # macOS
