@@ -13,12 +13,11 @@ Once you have Expo installed, you will need to:
 ```bash
 expo install  // Using expo install ensures Expo installs compatible versions of dependencies
 ```
-3. Add a file named index.js to the /constants directory, which supplies a Firebase configuration object for photo URI storage. Please contact the author for a copy of this file (not included in this repository due to an exposed API key).
-4. Start Expo from the command line:
+3. Start Expo from the command line:
 ```bash
 expo start
 ```
-5. From this point, you have some options: you can get the Expo app to use Stationery directly on your phone; or, launch an iOS or Andriod emulator and run it there.
+4. From this point, you have some options: you can get the Expo app to use Stationery directly on your phone; or, launch an iOS or Andriod emulator and run it there.
 
 ## Notes on Deployment
 
