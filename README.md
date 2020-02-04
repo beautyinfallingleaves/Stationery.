@@ -13,7 +13,7 @@ Once you have Expo installed, you will need to:
 ```bash
 expo install  // Using expo install ensures Expo installs compatible versions of dependencies
 ```
-3. Add a file named config.js to the /constants directory, which supplies a Firebase configuration object for photo URI storage. Please contact the author for a copy of this file (not included in this repository due to an exposed API key).
+3. Add a file named index.js to the /constants directory, which supplies a Firebase configuration object for photo URI storage. Please contact the author for a copy of this file (not included in this repository due to an exposed API key).
 4. Start Expo from the command line:
 ```bash
 expo start

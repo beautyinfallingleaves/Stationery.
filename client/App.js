@@ -4,7 +4,7 @@ import { StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import store from './store'
 import PostcardView from './components/PostcardView'
-import { firebaseConfig } from '../constants/config'
+import { firebaseConfig } from '../constants'
 import * as firebase from 'firebase'
 
 class App extends React.Component {

@@ -15,7 +15,7 @@ import {
 import { Ionicons } from '@expo/vector-icons'
 import { captureRef as takeSnapshotAsync } from 'react-native-view-shot'
 import { uploadImageToFirebaseStorage } from '../utils'
-import { serverUrl } from '../../constants/config'
+import { serverUrl } from '../../constants'
 
 const initialSendModalState = {
   recipient: '',
