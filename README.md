@@ -4,16 +4,16 @@ A simple app for tying memories to maps, in the form of a postcard you can write
 
 ## Installation
 
-This project was built using [Expo](https://expo.io/). The most basic approach to running this app involves installing, configuring, and running Expo on your local machine. Here is Expo's [getting started guide](https://expo.io/learn).
+This project was built using [Expo](https://expo.io/). The most basic approach to running it involves installing, configuring, and running Expo on your local machine. Here is Expo's [getting started guide](https://expo.io/learn).
 
 Once you have Expo installed, you will need to:
 
 1. Clone the project to your local machine.
 2. Install modules and dependencies:
 ```bash
-expo install  // Using expo install lets Expo ensure compatible versions of dependencies are installed
+expo install  // Using expo install ensures Expo installs compatible versions of dependencies
 ```
-3. This project requires adding a file named config.js to the /constants directory, which supplies a Firebase configuration object for photo URI storage. Please contact the author for a copy of this file (not included in this repository due to an exposed API key).
+3. Add a file named config.js to the /constants directory, which supplies a Firebase configuration object for photo URI storage. Please contact the author for a copy of this file (not included in this repository due to an exposed API key).
 4. Start Expo from the command line:
 ```bash
 expo start
@@ -24,9 +24,9 @@ expo start
 
 This project includes both an Expo client app and a Node/Express server for dealing with email send requests (via a SendGrid integration).
 
-The client app by default points to the author's deployment of this server on Heroku. You can point it to your own server deployment, but you will need to update the serverUrl in /constants/config.js to point to your server's address.
+By default, the client app points to the author's deployment on Heroku. You can point it to your own server deployment, but you will need to update the serverUrl in /constants/config.js to point to your server's address.
 
-Further, if hosting your own server and using Expo to run the client app, you'll need to make the server address externally available ([ngrok](https://ngrok.com/) is a simple, free option for doing this).
+Further, if hosting your own server and using Expo to run the client app, you'll need to ensure that the server address is externally accessible ([ngrok](https://ngrok.com/) is a simple, free option for doing this).
 
 ## Usage
 
