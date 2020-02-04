@@ -10,8 +10,6 @@ npm-debug.*
 web-build/
 web-report/
 secrets.js
-constants/index.js
-.env
 
 # macOS
 .DS_Store
