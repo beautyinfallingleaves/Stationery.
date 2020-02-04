@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { toggleTakingPhoto } from '../store/takingPhoto'
-import { Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { Camera } from 'expo-camera'
 import * as Permissions from 'expo-permissions'
@@ -73,11 +73,7 @@ class TakePhoto extends React.Component {
           }}
         >
           <View
-            style={{
-              flex: 1,
-              backgroundColor: 'transparent',
-              flexDirection: 'row',
-            }}>
+            style={styles.buttonContainer}>
             <Avatar
               onPress={() => {
                 this.setState({
@@ -97,14 +93,7 @@ class TakePhoto extends React.Component {
               overlayContainerStyle={{
                 backgroundColor: 'white',
               }}
-              containerStyle={{
-                position: 'absolute',
-                bottom: 20,
-                left: 20,
-                borderColor: 'black',
-                shadowOpacity: 0.5,
-                shadowOffset: { width: 1, height: 1 },
-              }}
+              containerStyle={styles.flipButton}
             />
             <Avatar
               onPress={this.takePhoto}
@@ -113,15 +102,7 @@ class TakePhoto extends React.Component {
               overlayContainerStyle={{
                 backgroundColor: 'red',
               }}
-              containerStyle={{
-                position: 'absolute',
-                bottom: 20,
-                right: 20,
-                borderColor: 'white',
-                borderWidth: 4,
-                shadowOpacity: 0.5,
-                shadowOffset: { width: 1, height: 1 },
-              }}
+              containerStyle={styles.takePhotoButton}
             />
           </View>
         </Camera>
@@ -137,3 +118,28 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(null, mapDispatch)(TakePhoto)
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+  },
+  flipButton: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    borderColor: 'black',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 1, height: 1 },
+  },
+  takePhotoButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    borderColor: 'white',
+    borderWidth: 4,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 1, height: 1 },
+  }
+})

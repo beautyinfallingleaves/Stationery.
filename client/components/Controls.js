@@ -5,6 +5,7 @@ import {
   Ionicons,
   FontAwesome,
   MaterialIcons,
+  MaterialCommunityIcons,
 } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { setCurrentSide } from '../store/currentSide'
@@ -50,13 +51,13 @@ const Controls = (props) => {
   return (
     <View style={styles.root}>
       <TouchableOpacity onPress={handleFlip}>
-        <Ionicons name='ios-swap' size={35} />
+        <Ionicons name='ios-swap' size={38} />
       </TouchableOpacity>
       {currentSide === 'back' ? (
         <TouchableOpacity onPress={toggleMapVisible}>
           <FontAwesome
             name={mapVisible ? ('map-o') : ('map')}
-            size={27}
+            size={30}
           />
         </TouchableOpacity>
       ) : (
@@ -64,19 +65,19 @@ const Controls = (props) => {
       )}
       <TouchableOpacity onPress={toggleIsWriting}>
         {isWriting ? (
-          <MaterialIcons name='layers-clear' size={39} />
+          <MaterialIcons name='layers-clear' size={42} />
         ) : (
-          <Ionicons name='md-brush' size={35} />
+          <MaterialCommunityIcons name='pen' size={42} />
         )}
       </TouchableOpacity>
       {/* <TouchableOpacity>
         <Ionicons name='ios-color-palette' size={35} />
       </TouchableOpacity> */}
       <TouchableOpacity onPress={handleTrash}>
-        <Ionicons name='ios-trash' size={35} />
+        <Ionicons name='ios-trash' size={40} />
       </TouchableOpacity>
       <TouchableOpacity onPress={toggleSendModalVisible}>
-        <Ionicons name='md-paper-plane' size={35} />
+        <Ionicons name='md-paper-plane' size={40} />
       </TouchableOpacity>
     </View>
   )
