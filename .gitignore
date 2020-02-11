@@ -1,5 +1,8 @@
 # Ignore these
-node_modules/**/*
+node_modules/*
+!node_modules/expo
+node_modules/expo/*
+!node_modules/expo/AppEntry.js
 .expo/*
 npm-debug.*
 *.jks
@@ -13,7 +16,7 @@ web-report/
 secrets.js
 
 # But not these
-!*/node_modules/expo/AppEntry.js
+
 
 # macOS
 .DS_Store
