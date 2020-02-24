@@ -1,8 +1,9 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "test": "npm run test:server",
+    "test": "npm run test:server & npm run test:client",
     "test:server": "mocha -w ./server/test",
+    "test:client": "jest",
     "start": "node server -e html,js,scss --ignore client",
     "start-client": "expo start",
     "start-server": "nodemon server -e html,js,scss --ignore client",
@@ -44,14 +45,23 @@
     "react-native-view-shot": "~2.6.0",
     "react-native-web": "^0.11.7",
     "react-redux": "^7.1.3",
-    "redux": "^4.0.4"
+    "redux": "^4.0.4",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-preset-expo": "^7.1.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "jest-expo": "^36.0.1",
     "mocha": "^7.0.1",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
+    ]
   },
   "private": true
 }

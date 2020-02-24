@@ -17,7 +17,7 @@ describe('API Routes', function() {
       await request(app)
         .post('/api/email')
         .send({
-          recipient: 'beautyinfallingleaves@gmail.com',
+          recipient: 'no-reply@test.com',
           frontImageFirebaseUrl: 'test',
           backImageFirebaseUrl: 'test',
         })
