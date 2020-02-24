@@ -7,6 +7,14 @@ router.post('/', async (req, res, next) => {
   const { recipient, frontImageFirebaseUrl, backImageFirebaseUrl } = req.body
 
   try {
+    if (
+      !recipient
+      || !frontImageFirebaseUrl
+      || !backImageFirebaseUrl
+    ) throw new Error(
+      'Sending email requires a recipient email address, as well as front and back image.'
+    )
+
     const msg = {
       to: recipient,
       from: 'no-reply@stationery.com',
@@ -15,9 +23,8 @@ router.post('/', async (req, res, next) => {
       html: `<html><body><img src="${frontImageFirebaseUrl}" /><div/><img src="${backImageFirebaseUrl}" /></body></html>`,
     }
     await sgMail.send(msg)
-    res.sendStatus(200)
+    res.sendStatus(202)
   } catch (err) {
-    console.log(err)
     res.sendStatus(500)
   }
 })

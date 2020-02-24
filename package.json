@@ -1,6 +1,8 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "test": "npm run test:server",
+    "test:server": "mocha -w ./server/test",
     "start": "node server -e html,js,scss --ignore client",
     "start-client": "expo start",
     "start-server": "nodemon server -e html,js,scss --ignore client",
@@ -45,7 +47,11 @@
     "redux": "^4.0.4"
   },
   "devDependencies": {
-    "babel-preset-expo": "^7.1.0"
+    "babel-preset-expo": "^7.1.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^7.0.1",
+    "supertest": "^4.0.2"
   },
   "private": true
 }
