@@ -25,7 +25,7 @@
     "expo-location": "~7.0.0",
     "expo-mail-composer": "^7.0.0",
     "expo-pixi": "^1.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase": "^7.4.0",
     "morgan": "^1.9.1",
     "native-base": "^2.13.8",
